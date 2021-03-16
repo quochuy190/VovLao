@@ -145,9 +145,10 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
         val songHasChanged = aSong.songId != mCurrentSong?.songId
         if (songHasChanged) mCurrentSong = aSong
 
-        if (songHasChanged || mExoPlayer == null) {
+
             releaseResources(false) // release everything except the player
-            val source = mCurrentSong?.source
+           // val source = mCurrentSong?.source
+            val source ="https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3"
             if (mExoPlayer == null) {
                 mExoPlayer = SimpleExoPlayer.Builder(context).build()
                 mExoPlayer?.addListener(mEventListener)
@@ -189,7 +190,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             // Wifi lock, which prevents the Wifi radio from going to
             // sleep while the song is playing.
             mWifiLock?.acquire()
-        }
+
         configurePlayerState()
     }
 

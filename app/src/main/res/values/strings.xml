@@ -6,9 +6,10 @@
     <string name="exit">Thoát</string>
     <string name="title_notify">Thông báo</string>
     <string name="system_error">Lỗi kết nối, kiểm tra lại mạng và thử lại</string>
-    <string name="menu_home">Thoát</string>
-    <string name="menu_menu">Thoát</string>
-    <string name="menu_sun">Thoát</string>
+    <string name="title_home">Home</string>
+    <string name="title_newpage">News</string>
+    <string name="title_replay">Replay</string>
+    <string name="title_setup">Setting</string>
 
     <string name="notification_channel">APP_Channel_ID</string>
     <string name="notification_channel_description">Channel ID for APP</string>
