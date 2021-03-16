@@ -9,4 +9,7 @@
     <string name="menu_home">Thoát</string>
     <string name="menu_menu">Thoát</string>
     <string name="menu_sun">Thoát</string>
+
+    <string name="notification_channel">APP_Channel_ID</string>
+    <string name="notification_channel_description">Channel ID for APP</string>
 </resources>
