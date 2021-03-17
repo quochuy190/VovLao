@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VovLao</string>
+    <string name="app_name">Lao National Radio</string>
     <string name="message_permission">Hãy cấp quyền truy cập để các chức năng của ứng dụng có thể hoạt động bình thường.</string>
     <string name="title_permission">Quyền truy cập</string>
     <string name="message_error_permission">Một số quyền chưa được cấp. Hãy vào cài đặt và cấp quyền để ứng dụng có thể hoạt động bình thường.</string>
