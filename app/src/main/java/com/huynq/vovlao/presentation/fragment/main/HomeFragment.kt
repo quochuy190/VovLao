@@ -3,7 +3,9 @@ package com.huynq.vovlao.presentation.fragment.main
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.huynq.vovlao.R
+import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.Song
+import com.huynq.vovlao.presentation.adapter.EPGAdapter
 import com.huynq.vovlao.presentation.adapter.ImagesAdapter
 import com.huynq.vovlao.presentation.adapter.RadioStreaminAdapter
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
@@ -15,8 +17,10 @@ import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 @Suppress("DEPRECATION")
 class HomeFragment : BaseFragment() {
     val mSongList: MutableList<Song> = ArrayList()
+    val mEpgList: MutableList<Epg> = ArrayList()
     lateinit var mainViewModel: MainViewModel
     lateinit var radioAdapter: RadioStreaminAdapter
+    lateinit var epgAdapter: EPGAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -43,7 +47,23 @@ class HomeFragment : BaseFragment() {
         mSongList.add(song2)
         mSongList.add(song3)
         radioAdapter.setDatas(mSongList)
+        initEeg()
         initAutoViewpage()
+    }
+
+    private fun initEeg() {
+        epgAdapter = context?.let {
+            EPGAdapter(it, doneClick = {
+
+            })
+        }!!
+        rcvEPG.layoutManager = GridLayoutManager(activity, 1)
+        rcvEPG.apply { adapter = epgAdapter }
+        for( i in 0..5){
+            val obj = Epg(0, "VOV1")
+            mEpgList.add(obj)
+        }
+        epgAdapter.setDatas(mEpgList)
     }
 
     private fun initAutoViewpage() {

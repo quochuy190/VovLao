@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VovLao">
-        <activity android:name=".presentation.activity.SongPlayerActivity">
+        <activity android:name=".presentation.activity.SplashScreenAcitivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
