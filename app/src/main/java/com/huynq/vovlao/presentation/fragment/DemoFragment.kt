@@ -1,5 +1,6 @@
 package com.huynq.vovlao.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -13,7 +14,23 @@ import kotlinx.android.synthetic.main.fragment_demo.*
 class DemoFragment : BaseFragment() {
 
     lateinit var mainViewModel: MainViewModel
+    companion object {
+        fun newInstance(): DemoFragment {
+            val fragment = DemoFragment()
+            val args = Bundle()
+            //args.putString("jsonFile", jsonFile)
+            fragment.setArguments(args)
+            return fragment
+        }
+    }
 
+    var jsonFile: String = "";
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments?.getString("jsonFile")?.let {
+            jsonFile = it
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

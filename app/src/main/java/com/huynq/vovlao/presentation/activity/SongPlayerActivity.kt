@@ -170,8 +170,6 @@ class SongPlayerActivity : BaseSongPlayerActivity() {
     companion object {
 
         private val TAG = SongPlayerActivity::class.java.name
-
-
         fun start(context: Context, song: Song, songList: ArrayList<Song>) {
             val intent = Intent(context, SongPlayerActivity::class.java).apply {
                 putExtra(ASong::class.java.name, song)

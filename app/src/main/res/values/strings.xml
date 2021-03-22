@@ -13,4 +13,9 @@
 
     <string name="notification_channel">APP_Channel_ID</string>
     <string name="notification_channel_description">Channel ID for APP</string>
+
+    <string name="st_introduct">Introduct</string>
+    <string name="st_language">Language</string>
+    <string name="st_rule">Rule</string>
+    <string name="st_notify">Notifycation</string>
 </resources>

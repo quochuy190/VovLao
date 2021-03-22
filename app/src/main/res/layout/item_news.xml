@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.huynq.vovlao.data.model.News" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_7dp"
+        android:layout_marginEnd="@dimen/dimen_7dp"
+        android:orientation="vertical">
+        <View
+            android:id="@+id/viewTop"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/appBar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_cover"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintDimensionRatio="3:2.4"
+            app:layout_constraintTop_toBottomOf="@+id/viewTop"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</layout>

@@ -2,9 +2,11 @@ package com.huynq.vovlao.presentation.fragment.main
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.android.player.model.ASong
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.Song
+import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.EPGAdapter
 import com.huynq.vovlao.presentation.adapter.ImagesAdapter
 import com.huynq.vovlao.presentation.adapter.RadioStreaminAdapter
@@ -21,6 +23,7 @@ class HomeFragment : BaseFragment() {
     lateinit var mainViewModel: MainViewModel
     lateinit var radioAdapter: RadioStreaminAdapter
     lateinit var epgAdapter: EPGAdapter
+    private var mASongList: MutableList<ASong>? = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -33,20 +36,29 @@ class HomeFragment : BaseFragment() {
     override fun initView() {
         radioAdapter = context?.let {
             RadioStreaminAdapter(it, doneClick = {
-
+                (context as MainActivity).play(mASongList, mSongList[it])
             })
         }!!
         rcvRadioStreaming.layoutManager = GridLayoutManager(activity, 4)
         rcvRadioStreaming.apply { adapter = radioAdapter }
-        val song = Song(0, "VOV1", "path.toString()", "artist", "albumArt", "duration", 3)
-        val song1 = Song(0, "VOV2", "path.toString()", "artist", "albumArt", "duration", 3)
-        val song2 = Song(0, "VOV3", "path.toString()", "artist", "albumArt", "duration", 3)
-        val song3 = Song(0, "VOV4", "path.toString()", "artist", "albumArt", "duration", 3)
+        val song = Song(0, "VOV1", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3"
+            , "artist", "albumArt", "duration" ,3, false)
+        val song1 = Song(1, "VOV2", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM"
+            , "artist", "albumArt", "duration", 3, false)
+        val song2 = Song(2, "VOV3", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3",
+            "artist", "albumArt", "duration", 3, false)
+        val song3 = Song(3, "VOV4", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM",
+            "artist", "albumArt", "duration", 3, false)
         mSongList.add(song)
         mSongList.add(song1)
         mSongList.add(song2)
         mSongList.add(song3)
+        mASongList!!.add(song)
+        mASongList!!.add(song1)
+        mASongList!!.add(song2)
+        mASongList!!.add(song3)
         radioAdapter.setDatas(mSongList)
+
         initEeg()
         initAutoViewpage()
     }

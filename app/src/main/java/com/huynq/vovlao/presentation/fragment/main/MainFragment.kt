@@ -37,9 +37,7 @@ class MainFragment : BaseFragment() {
 //            activity?.onBackPressed()
 //        }
         imgBack.gone()
-        pull_refesh.setOnRefreshListener {
 
-        }
         initViewPager()
     }
 
@@ -47,9 +45,9 @@ class MainFragment : BaseFragment() {
         tv_toolbar_title.text = getString(R.string.title_home)
         val adapter = MainViewPagerAdapter(childFragmentManager)
         adapter.addFragment(HomeFragment(), "")
+        adapter.addFragment(NewsFragment(), "")
         adapter.addFragment(DemoFragment(), "")
-        adapter.addFragment(DemoFragment(), "")
-        adapter.addFragment(DemoFragment(), "")
+        adapter.addFragment(SettingFragment(), "")
         vp_main.adapter = adapter
         vp_main.setOffscreenPageLimit(4)
         vp_main.setPageScrollEnabled(false)

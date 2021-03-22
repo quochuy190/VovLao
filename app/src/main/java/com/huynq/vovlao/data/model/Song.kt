@@ -16,5 +16,6 @@ data class Song(
     var artistName: String?,
     var albumArt: String?,
     var duration: String?,
-    var type: Int = 0
+    var type: Int = 0,
+    var isSelected : Boolean = false
 ) : ASong(id, songName, albumArt, artistName, path, type, duration), Parcelable
