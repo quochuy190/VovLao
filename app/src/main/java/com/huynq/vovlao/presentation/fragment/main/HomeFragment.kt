@@ -1,7 +1,12 @@
 package com.huynq.vovlao.presentation.fragment.main
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.media.AudioManager
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Epg
@@ -11,8 +16,13 @@ import com.huynq.vovlao.presentation.adapter.EPGAdapter
 import com.huynq.vovlao.presentation.adapter.ImagesAdapter
 import com.huynq.vovlao.presentation.adapter.RadioStreaminAdapter
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
+import com.vbeeon.iotdbs.data.model.MessageEventBus
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
+import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 
 
@@ -24,6 +34,8 @@ class HomeFragment : BaseFragment() {
     lateinit var radioAdapter: RadioStreaminAdapter
     lateinit var epgAdapter: EPGAdapter
     private var mASongList: MutableList<ASong>? = mutableListOf()
+    private var isMute = false
+    val songPlayerViewModel: SongPlayerViewModel = SongPlayerViewModel.getPlayerViewModelInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -32,7 +44,29 @@ class HomeFragment : BaseFragment() {
     override fun getLayoutRes(): Int {
         return R.layout.fragment_home
     }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEventBus?) {
+        if (event!=null){
+            when(event.style){
+                0 -> {
+                    showProgress()
+                }
+                1 -> {
+                    dismissProgress()
+                }
+            }
+
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
     override fun initView() {
         radioAdapter = context?.let {
             RadioStreaminAdapter(it, doneClick = {
@@ -41,14 +75,12 @@ class HomeFragment : BaseFragment() {
         }!!
         rcvRadioStreaming.layoutManager = GridLayoutManager(activity, 4)
         rcvRadioStreaming.apply { adapter = radioAdapter }
-        val song = Song(0, "VOV1", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3"
-            , "artist", "albumArt", "duration" ,3, false)
-        val song1 = Song(1, "VOV2", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM"
-            , "artist", "albumArt", "duration", 3, false)
+        val song = Song(0, "VOV1", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3", "artist", "albumArt", "duration", 3, false)
+        val song1 = Song(1, "VOV2", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM", "artist", "albumArt", "duration", 3, false)
         val song2 = Song(2, "VOV3", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3",
-            "artist", "albumArt", "duration", 3, false)
+                "artist", "albumArt", "duration", 3, false)
         val song3 = Song(3, "VOV4", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM",
-            "artist", "albumArt", "duration", 3, false)
+                "artist", "albumArt", "duration", 3, false)
         mSongList.add(song)
         mSongList.add(song1)
         mSongList.add(song2)
@@ -58,9 +90,28 @@ class HomeFragment : BaseFragment() {
         mASongList!!.add(song2)
         mASongList!!.add(song3)
         radioAdapter.setDatas(mSongList)
-
+        initEvent()
         initEeg()
         initAutoViewpage()
+    }
+
+    @SuppressLint("UseRequireInsteadOfGet")
+    private fun initEvent() {
+        icPlay.setOnSafeClickListener {
+            (context as MainActivity).toggle()
+        }
+        icMute.setOnSafeClickListener {
+            val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            if (isMute) {
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                isMute = false;
+                icMute.setImageDrawable(resources.getDrawable(R.drawable.ic_unmute))
+            } else {
+                icMute.setImageDrawable(resources.getDrawable(R.drawable.ic_mute))
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                isMute = true;
+            }
+        }
     }
 
     private fun initEeg() {
@@ -72,7 +123,7 @@ class HomeFragment : BaseFragment() {
         rcvEPG.layoutManager = GridLayoutManager(activity, 1)
         rcvEPG.apply { adapter = epgAdapter }
         for( i in 0..5){
-            val obj = Epg(0, "VOV1")
+            val obj = Epg(i, "VOV1", getString(R.string.tv_sort_news_demo), "6h:30")
             mEpgList.add(obj)
         }
         epgAdapter.setDatas(mEpgList)
@@ -81,15 +132,16 @@ class HomeFragment : BaseFragment() {
     private fun initAutoViewpage() {
         val images = ArrayList<Int>()
         images.add(R.drawable.placeholder)
-        images.add(R.drawable.menu_newspaper)
-        images.add(R.drawable.menu_radio)
+        images.add(R.drawable.img_cover_news)
+        images.add(R.drawable.img_auto_scroll)
         vpAutoScroll.adapter = context?.let { ImagesAdapter(it, images) }
-        vpAutoScroll.setInterval(2000)
+        vpAutoScroll.setInterval(3000)
         vpAutoScroll.setDirection(AutoScrollViewPager.Direction.RIGHT)
         vpAutoScroll.setCycle(true)
         vpAutoScroll.setBorderAnimation(true)
         vpAutoScroll.setSlideBorderMode(AutoScrollViewPager.SlideBorderMode.TO_PARENT)
         vpAutoScroll.startAutoScroll()
+        tlAutoVp.setupWithViewPager(vpAutoScroll)
     }
 
     override fun initViewModel() {
@@ -97,7 +149,41 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun observable() {
+        with(songPlayerViewModel) {
 
+//            songDurationData.observe(this@HomeFragment, Observer {
+//                song_player_progress_seek_bar.max = it
+//            })
+//
+//            songPositionTextData.observe(this@HomeFragment,
+//                Observer { t -> song_player_passed_time_text_view.text = t })
+//
+//            songPositionData.observe(this@HomeFragment, Observer {
+//                song_player_progress_seek_bar.progress = it
+//            })
+//
+//            isRepeatData.observe(this@HomeFragment, Observer {
+//                song_player_repeat_image_view.setImageResource(
+//                    if (it) R.drawable.ic_repeat_one_color_primary_vector
+//                    else R.drawable.ic_repeat_one_black_vector
+//                )
+//            })
+//
+//            isShuffleData.observe(this@HomeFragment, Observer {
+//                song_player_shuffle_image_view.setImageResource(
+//                    if (it) R.drawable.ic_shuffle_color_primary_vector
+//                    else R.drawable.ic_shuffle_black_vector
+//                )
+//            })
+
+            isPlayData.observe(this@HomeFragment, Observer {
+                icPlay.setImageResource(if (it) R.drawable.exo_icon_pause else R.drawable.exo_icon_play)
+            })
+
+            playerData.observe(this@HomeFragment, Observer {
+                //loadInitialData(it)
+            })
+        }
     }
 
 

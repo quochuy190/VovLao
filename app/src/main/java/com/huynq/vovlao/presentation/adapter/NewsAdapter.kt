@@ -1,6 +1,8 @@
 package com.huynq.vovlao.presentation.adapter
 
 import android.content.Context
+import android.graphics.text.LineBreaker
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -26,6 +28,9 @@ class NewsAdapter internal constructor(var context: Context, val doneClick: (Int
         fun bind(roomEntity: News?) {
             itemRoomBinding.data = roomEntity
             itemRoomBinding.executePendingBindings()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                itemRoomBinding.tvSortDesNews.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+            }
 //            if (roomEntity!!.isSelected){
 //                val sysTitle = "<b><font color='#000000'>"+roomEntity.name+"</font></b>"
 //                itemRoomBinding.tvTimeCalName.text = setTextHTML(sysTitle)

@@ -46,7 +46,7 @@ class MainFragment : BaseFragment() {
         val adapter = MainViewPagerAdapter(childFragmentManager)
         adapter.addFragment(HomeFragment(), "")
         adapter.addFragment(NewsFragment(), "")
-        adapter.addFragment(DemoFragment(), "")
+        adapter.addFragment(ReplayFragment(), "")
         adapter.addFragment(SettingFragment(), "")
         vp_main.adapter = adapter
         vp_main.setOffscreenPageLimit(4)

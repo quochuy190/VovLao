@@ -112,7 +112,6 @@ class SongPlayerViewModel : ViewModel() {
 
 
     companion object {
-
         private val TAG = SongPlayerViewModel::class.java.name
         private var mInstance: SongPlayerViewModel? = null
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -15,6 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
+    <com.google.android.material.tabs.TabLayout
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintWidth_percent="0.3"
+        app:tabBackground="@drawable/tab_selected"
+        android:id="@+id/tlAutoVp"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vpAutoScroll"
+        app:layout_constraintStart_toStartOf="@id/vpAutoScroll"
+        app:layout_constraintEnd_toEndOf="@id/vpAutoScroll"
+        app:tabMode="fixed" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="@dimen/dimen_5dp"
         android:id="@+id/rcvRadioStreaming"
@@ -26,7 +40,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llControl"
-        android:layout_marginTop="@dimen/dimen_7dp"
+        android:layout_marginTop="@dimen/dimen_2dp"
         android:background="@color/bg_circle_selected"
         android:padding="@dimen/dimen_7dp"
         app:layout_constraintHeight_percent="0.1"
@@ -47,17 +61,21 @@
             android:layout_height="0dp"
             app:tint="@color/white" />
         <ImageView
+            android:padding="@dimen/dimen_2dp"
             android:layout_marginEnd="@dimen/dimen_5dp"
             android:id="@+id/icMute"
-            android:src="@drawable/ic_pause"
+            android:src="@drawable/ic_unmute"
             app:layout_constraintWidth_percent="0.07"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icPlay"
+            app:layout_constraintBottom_toBottomOf="@+id/icPlay"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:tint="@color/white" />
         <SeekBar
+            android:progress="99"
+            android:thumb="@android:color/transparent"
             style="@style/MySeekBar"
             android:layout_marginStart="@dimen/dimen_5dp"
             android:layout_marginEnd="@dimen/dimen_5dp"
@@ -79,7 +97,7 @@
         android:ellipsize="end"
         android:gravity="left"
         android:maxLines="1"
-        android:text="@string/app_name"
+        android:text="@string/lable_epg"
         android:textColor="@color/appBar"
         android:textSize="@dimen/sp_20"
         android:textStyle="bold"

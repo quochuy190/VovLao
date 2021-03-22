@@ -1,3 +1,5 @@
 package com.huynq.vovlao.data.model
 
-data class News(val id: Int, val name: String)
+import java.io.Serializable
+
+data class News(val id: Int, val title: String, val urlCover: String, val sortDes : String, val description: String, val dateTime: String) : Serializable

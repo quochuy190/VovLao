@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.huynq.vovlao.data.model.Song" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dimen_7dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/imgBGChannel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/bg_channel_radio"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:duplicateParentState="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="@dimen/dimen_5dp"
+            android:text="@{data.songName}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias="0.7"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintBottom_toBottomOf="@+id/imgBGChannel"
+            app:layout_constraintEnd_toEndOf="@+id/imgBGChannel"
+            app:layout_constraintStart_toStartOf="@+id/imgBGChannel"
+            app:layout_constraintTop_toTopOf="@+id/imgBGChannel" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</layout>

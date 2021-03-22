@@ -13,8 +13,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_7dp"
-        android:layout_marginEnd="@dimen/dimen_7dp"
+        android:layout_marginTop="@dimen/dimen_7dp"
         android:orientation="vertical">
         <View
             android:id="@+id/viewTop"
@@ -24,18 +23,92 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <ImageView
+            android:id="@+id/imgCoverEpg"
             android:scaleType="centerCrop"
             android:src="@drawable/img_cover"
             android:layout_marginTop="@dimen/dimen_5dp"
-            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintDimensionRatio="3:2.4"
             app:layout_constraintTop_toBottomOf="@+id/viewTop"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
+        <TextView
+            android:layout_marginStart="@dimen/dimen_2dp"
+            android:padding="@dimen/dimen_1dp"
+            android:id="@+id/tvTimeEPG"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:text="@{data.title}"
+            android:textColor="@color/appBar"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgCoverEpg"
+            app:layout_constraintTop_toTopOf="@+id/imgCoverEpg" />
+        <TextView
+            android:layout_marginStart="@dimen/dimen_2dp"
+            android:padding="@dimen/dimen_1dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:id="@+id/tvDesEpg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:minLines="2"
+            android:text="@{data.description}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgCoverEpg"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimeEPG" />
+
+        <ImageView
+            android:id="@+id/icPhatthanh"
+            android:layout_margin="@dimen/dimen_2dp"
+            android:padding="@dimen/dimen_5dp"
+            android:src="@drawable/ic_phatthanh"
+            app:layout_constraintWidth_percent="0.09"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toBottomOf="@id/tvDesEpg"
+            app:layout_constraintStart_toEndOf="@+id/imgCoverEpg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
 
+        <TextView
+            android:padding="@dimen/dimen_2dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:id="@+id/tvTimeLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:text="@string/time_epg_lable"
+            android:textColor="@color/appBar"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintBottom_toBottomOf="@+id/icPhatthanh"
 
+            app:layout_constraintStart_toEndOf="@+id/icPhatthanh"
+            app:layout_constraintTop_toTopOf="@+id/icPhatthanh" />
+        <TextView
+            android:padding="@dimen/dimen_2dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:id="@+id/tvTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:text="@{data.time}"
+            android:textColor="@color/appBar"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/icPhatthanh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTimeLable"
+            app:layout_constraintTop_toTopOf="@+id/icPhatthanh" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

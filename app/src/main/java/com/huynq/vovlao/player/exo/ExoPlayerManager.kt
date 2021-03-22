@@ -25,6 +25,8 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import com.vbeeon.iotdbs.data.model.MessageEventBus
+import org.greenrobot.eventbus.EventBus
 
 /**
  * This class is responsible for managing the player(actions, state, ...) using [ExoPlayer]
@@ -113,6 +115,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
 
 
     private fun setCurrentSongState() {
+        Log.d(TAG, "setCurrentSongState()")
         var state = 0
         if (mExoPlayer == null) {
             state = if (mExoPlayerIsStopped) PlaybackState.STATE_STOPPED
@@ -141,15 +144,13 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
         mPlayOnFocusGain = true
         tryToGetAudioFocus()
         registerAudioNoisyReceiver()
-
         val songHasChanged = aSong.songId != mCurrentSong?.songId
         if (songHasChanged) mCurrentSong = aSong
-
-
+        if (songHasChanged || mExoPlayer == null) {
             releaseResources(false) // release everything except the player
             val source = mCurrentSong?.source
-           // val source ="https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3"
-        //val source ="https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM"
+            // val source ="https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3"
+            //val source ="https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM"
 
             if (mExoPlayer == null) {
                 mExoPlayer = SimpleExoPlayer.Builder(context).build()
@@ -162,9 +163,9 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             // then the content type should be set to CONTENT_TYPE_SPEECH for those
             // tracks.
             val audioAttributes = AudioAttributes.Builder()
-                .setContentType(CONTENT_TYPE_MUSIC)
-                .setUsage(USAGE_MEDIA)
-                .build()
+                    .setContentType(CONTENT_TYPE_MUSIC)
+                    .setUsage(USAGE_MEDIA)
+                    .build()
             mExoPlayer?.audioAttributes = audioAttributes
 
             // Produces DataSource instances through which media data is loaded.
@@ -179,7 +180,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             mediaSource = when (mCurrentSong?.songType) {
                 C.TYPE_OTHER ->
                     ExtractorMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(Uri.parse(source))
+                            .createMediaSource(Uri.parse(source))
                 else ->
                     HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(source))
             }
@@ -187,12 +188,12 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             // Prepares media to play (happens on background thread) and triggers
             // {@code onPlayerStateChanged} callback when the stream is ready to play.
             mExoPlayer?.prepare(mediaSource)
-
+            EventBus.getDefault().post(MessageEventBus(0, "", null))
             // If we are streaming from the internet, we want to hold a
             // Wifi lock, which prevents the Wifi radio from going to
             // sleep while the song is playing.
             mWifiLock?.acquire()
-
+        }
         configurePlayerState()
     }
 

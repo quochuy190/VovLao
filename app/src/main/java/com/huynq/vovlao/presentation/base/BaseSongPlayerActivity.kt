@@ -1,23 +1,26 @@
 package com.android.player
 
+import android.app.ProgressDialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
-import android.os.Message
+import android.os.*
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.android.player.SongPlayerViewModel.Companion.getPlayerViewModelInstance
 import com.android.player.model.ASong
 import com.android.player.service.OnPlayerServiceCallback
 import com.android.player.service.SongPlayerService
+import com.huynq.vovlao.R
+import com.vbeeon.iotdbs.data.model.MessageEventBus
+import kotlinx.android.synthetic.main.fragment_replay.view.*
+import org.greenrobot.eventbus.EventBus
 
 
 open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback {
 
-
+    lateinit var progressDialog: ProgressDialog
     private var mService: SongPlayerService? = null
     private var mBound = false
     private var mSong: ASong? = null
@@ -25,7 +28,19 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     private var msg = 0
     val songPlayerViewModel: SongPlayerViewModel = getPlayerViewModelInstance()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage(this.getString(R.string.loading))
+        progressDialog.setCancelable(false)
+    }
+    fun showProgress() {
+        if (!progressDialog.isShowing) progressDialog.show()
+    }
 
+    fun dismissProgress() {
+        if (progressDialog.isShowing) progressDialog.dismiss()
+    }
     private val mHandler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -133,7 +148,10 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     }
 
     override fun setPlayStatus(isPlay: Boolean) {
+        if (isPlay)
+            EventBus.getDefault().post(MessageEventBus(1, "", null))
         songPlayerViewModel.setPlayStatus(isPlay)
+       // EventBus.getDefault().post(MessageEvent())
     }
 
     override fun updateSongProgress(duration: Long, position: Long) {
@@ -141,10 +159,12 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     }
 
     override fun setBufferingData(isBuffering: Boolean) {
+        Log.d(TAG, "setBufferingData: " + isBuffering)
         songPlayerViewModel.setBuffering(isBuffering)
     }
 
     override fun setVisibilityData(isVisibility: Boolean) {
+        Log.d(TAG, "setVisibilityData: " + isVisibility)
         songPlayerViewModel.setVisibility(isVisibility)
     }
 
@@ -167,7 +187,6 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
 
 
     companion object {
-
         private val TAG = BaseSongPlayerActivity::class.java.name
         const val SONG_LIST_KEY = "SONG_LIST_KEY"
         private const val ACTION_PLAY_SONG_IN_LIST = 1

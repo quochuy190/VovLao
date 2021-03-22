@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.News
+import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.NewsAdapter
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
 import com.huynq.vovlao.presentation.viewmodel.NewsViewModel
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
+import com.vbeeon.iotdbs.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_demo.*
 import kotlinx.android.synthetic.main.fragment_recycleview.*
 
@@ -51,17 +53,20 @@ class ListNewsFragment : BaseFragment() {
     override fun initView() {
         adapterNews = context?.let {
             NewsAdapter(it, doneClick = {
-
+                (context as MainActivity).openFragment(DetailNewsFragment.newInstance(mListNews[it]), true)
             })
         }!!
         rcvAll.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         rcvAll.apply { adapter = adapterNews }
-        mListNews.add(News(0 , ""))
-        mListNews.add(News(0 , ""))
-        mListNews.add(News(0 , ""))
-        mListNews.add(News(0 , ""))
-        mListNews.add(News(0 , ""))
-        mListNews.add(News(0 , ""))
+        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
+                , getString(R.string.tv_des_news_demo), "20/3/2021"))
+        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
+                , getString(R.string.tv_des_news_demo), "20/3/2021"))
+        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
+                , getString(R.string.tv_des_news_demo), "20/3/2021"))
+        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
+                , getString(R.string.tv_des_news_demo), "20/3/2021"))
+
         adapterNews.setDatas(mListNews)
     }
 
