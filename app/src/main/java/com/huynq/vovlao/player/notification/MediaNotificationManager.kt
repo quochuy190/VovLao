@@ -260,7 +260,6 @@ constructor(private val mService: SongPlayerService) : BroadcastReceiver() {
     }
 
     companion object {
-
         private val TAG = MediaNotificationManager::class.java.name
         private val isSupportExpand = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
         private const val ACTION_PAUSE = "app.pause"

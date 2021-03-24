@@ -14,4 +14,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPlay"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/dimen_10dp"
+        app:cardElevation="@dimen/dimen_5dp"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintDimensionRatio="1:1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/dimen_78dp"
+        android:layout_marginEnd="@dimen/dimen_10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
