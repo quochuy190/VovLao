@@ -6,8 +6,10 @@ import androidx.lifecycle.Observer
 import com.android.player.BaseSongPlayerActivity
 import com.huynq.vovlao.R
 import com.huynq.vovlao.presentation.fragment.main.MainFragment
+import com.huynq.vovlao.presentation.fragment.player.PlayerDetailFragment
 import com.vbeeon.iotdbs.utils.gone
 import com.vbeeon.iotdbs.utils.openFragment
+import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import com.vbeeon.iotdbs.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -21,6 +23,9 @@ class MainActivity : BaseSongPlayerActivity() {
         openFragment(MainFragment(), false)
     }
     private fun initEvent() {
+        cardPlay.setOnSafeClickListener {
+            openFragment(PlayerDetailFragment(), true)
+        }
         Timber.e("")
         with(songPlayerViewModel) {
 
@@ -64,4 +69,6 @@ class MainActivity : BaseSongPlayerActivity() {
             })
         }
     }
+
+
 }
