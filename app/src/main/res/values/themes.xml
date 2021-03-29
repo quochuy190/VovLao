@@ -85,6 +85,12 @@
     <item name="android:colorControlActivated" tools:ignore="NewApi">@color/transparent</item>
     </style>
 
+    <style name="MySeekBarDetail" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint" tools:ignore="NewApi">#172D8C</item>
+        <item name="android:progressTint" tools:ignore="NewApi">@color/appBar</item>
+        <item name="android:colorControlActivated" tools:ignore="NewApi">@color/transparent</item>
+    </style>
+
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
     </style>

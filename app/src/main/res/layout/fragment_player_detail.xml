@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/llDetailPlay"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SeekBar
+        android:id="@+id/sekbarPlayDetail"
+        android:padding="@dimen/dimen_5dp"
+        app:layout_constraintWidth_percent="0.7"
+        android:thumb="@color/appBar"
+        style="@style/MySeekBarDetail"
+        android:layout_marginStart="@dimen/dimen_5dp"
+        android:layout_marginEnd="@dimen/dimen_5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/icPlayerDetail"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@drawable/ic_pause"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:layout_marginEnd="@dimen/dimen_5dp"
+        app:layout_constraintTop_toBottomOf="@+id/sekbarPlayDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <ImageView
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:id="@+id/icPre"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@drawable/ic_preview"
+        app:layout_constraintTop_toTopOf="@+id/icPlayerDetail"
+        app:layout_constraintBottom_toBottomOf="@+id/icPlayerDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/icPlayerDetail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <ImageView
+
+        android:id="@+id/icNext"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@drawable/ic_next"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        app:layout_constraintTop_toTopOf="@+id/icPlayerDetail"
+        app:layout_constraintBottom_toBottomOf="@+id/icPlayerDetail"
+        app:layout_constraintStart_toEndOf="@+id/icPlayerDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

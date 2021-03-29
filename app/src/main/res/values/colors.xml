@@ -50,6 +50,7 @@
     <color name="colorTextSecondary">#737373</color>
     <color name="gainsBoro">#b9b9b9</color>
     <color name="whiteSmoke">#f4f4f4</color>
+    <color name="bg_program_item">#EEF2F4</color>
 
     <integer-array name="color_list">
         <item>@color/white</item>
