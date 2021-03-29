@@ -126,10 +126,8 @@ class SplashScreenAcitivity : BaseActivity() {
         Handler().postDelayed({ /* Create an Intent that will start the Menu-Activity. */
             val isFirs =
                 SharedPrefs.instance.get(ConstantCommon.IS_FIRST_OPEN_APP, Boolean::class.java)
-            val isLogin =
-                SharedPrefs.instance.get(ConstantCommon.IS_LOGIN, Boolean::class.java)
-            if (!isFirs||!isLogin) {
-                this.launchActivity<MainActivity>()
+            if (!isFirs) {
+                this.launchActivity<IntroduceActivity>()
             } else {
                 this.launchActivity<MainActivity>()
             }

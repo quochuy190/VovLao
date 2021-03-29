@@ -41,7 +41,6 @@ class DemoFragment : BaseFragment() {
     }
 
     override fun initView() {
-        context?.let { Glide.with(it).load("https://wallpaperaccess.com/full/51607.jpg").into(imgDemo) }
 
     }
 

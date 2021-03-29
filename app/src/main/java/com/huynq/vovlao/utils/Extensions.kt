@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.huynq.vovlao.R
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
@@ -142,4 +144,10 @@ fun setTextHTML(html: String): Spanned
         Html.fromHtml(html)
     }
     return result
+}
+
+fun <T> Observable<T>.observerOnDatabase(block: (T) -> Unit): Observable<T> {
+    return this.observeOn(Schedulers.computation())
+        .doOnNext(block)
+        .observeOn(Schedulers.io())
 }

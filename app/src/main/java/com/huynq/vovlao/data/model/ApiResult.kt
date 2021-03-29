@@ -3,7 +3,7 @@ package com.vbeeon.iotdbs.data.model
 import com.google.gson.annotations.SerializedName
 
 class ApiResult <T>{
-    @SerializedName("code")
+    @SerializedName("statusCode")
     var errorCode = 0
 
     @SerializedName("message")

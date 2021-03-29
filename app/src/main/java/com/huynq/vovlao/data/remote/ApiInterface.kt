@@ -1,6 +1,9 @@
 package com.vbeeon.iotdbs.data.remote
 
 import com.huynq.vovlao.data.model.User
+import com.huynq.vovlao.data.remote.data.InitRequest
+import com.vbeeon.iotdbs.data.model.ApiResult
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 
@@ -13,6 +16,9 @@ interface ApiInterface {
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: Int): Single<User>
+
+    @POST("/users")
+    fun apiInit(@Body userDto: InitRequest): Single< ApiResult<User>>
 
 //    @POST("api/v1/subscriber/login")
 //    fun login(@Body loginRequest: LoginRequest): Single<ApiResult<LoginEntity>>
