@@ -6,11 +6,11 @@ import androidx.room.PrimaryKey
 import com.android.player.model.ASong
 import kotlinx.android.parcel.Parcelize
 
-@Suppress("DIFFERENT_NAMES_FOR_THE_SAME_PARAMETER_IN_SUPERTYPES")
-@Entity
+@Entity(tableName = "song")
 @Parcelize
 data class Song(
-    @PrimaryKey var id: Int,
+    @PrimaryKey
+    var id: Int,
     var songName: String?,
     var path: String,
     var artistName: String?,

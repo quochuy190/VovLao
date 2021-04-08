@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.huynq.vovlao">
+
+    <dist:module dist:instant="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
-        android:usesCleartextTraffic="true"
         android:name=".VoVApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VovLao">
+        android:theme="@style/Theme.VovLao"
+        android:usesCleartextTraffic="true">
         <activity android:name=".presentation.activity.SplashScreenAcitivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +31,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:name=".presentation.activity.MainActivity">
+            android:name=".presentation.activity.MainActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-
         <activity
-            android:screenOrientation="portrait"
-            android:name=".presentation.activity.IntroduceActivity">
+            android:name=".presentation.activity.IntroduceActivity"
+            android:screenOrientation="portrait"></activity>
 
-        </activity>
         <service android:name="com.android.player.service.SongPlayerService" />
     </application>
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.databinding.ItemRadioStreamingBinding
@@ -36,6 +37,9 @@ class RadioStreaminAdapter internal constructor(
                 itemRoomBinding.llImg.background =
                     context.getDrawable(R.drawable.bgr_circle_default)
             }
+            Glide.with(context).load(roomEntity.albumArt)
+                .placeholder(R.drawable.menu_radio)
+                .into(itemRoomBinding.imgLogoRadio)
         }
 
         init {

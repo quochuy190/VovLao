@@ -24,7 +24,6 @@ import kotlin.coroutines.CoroutineContext
 
 class MainViewModel : BaseViewModel() {
     private var parentJob = Job()
-
     // By default all the coroutines launched in this scope should be using the Main dispatcher
     val apiFloor1 = ApiClient.getClientFloor1()
     private val coroutineContext: CoroutineContext

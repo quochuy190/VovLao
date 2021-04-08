@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.dynamic-feature'
+}
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.vov.apigateway"
+        minSdkVersion 26
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"http://technopark.dev.vsm.net/tnp/\"")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"http://technopark.dev.vsm.net/tnp/\"")
+        }
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+    }
+}
+
+dependencies {
+    implementation project(":app")
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    api 'com.squareup.retrofit2:retrofit:+'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.okhttp3:okhttp:+'
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}

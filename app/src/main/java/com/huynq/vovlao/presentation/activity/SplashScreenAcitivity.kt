@@ -127,7 +127,7 @@ class SplashScreenAcitivity : BaseActivity() {
             val isFirs =
                 SharedPrefs.instance.get(ConstantCommon.IS_FIRST_OPEN_APP, Boolean::class.java)
             if (!isFirs) {
-                this.launchActivity<IntroduceActivity>()
+                this.launchActivity<MainActivity>()
             } else {
                 this.launchActivity<MainActivity>()
             }

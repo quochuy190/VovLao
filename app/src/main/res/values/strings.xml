@@ -26,5 +26,6 @@ Theo đó, Ủy ban Thường vụ Quốc hội đã xem xét và nhất trí th
     <string name="tv_sort_news_demo">Tại đây, sau khi xem xét đề nghị của Thủ tướng Lào Thongloun Sisoulith về việc điều chuyển và bổ nhiệm nhân sự chính phủ và dựa theo Luật Quốc hội Lào (sửa đổi năm 2020),</string>
     <string name="tvTitleReplay">CÁC CHƯƠNG TRÌNH</string>
     <string name="loading">Loading...</string>
+    <string name="title_apigateway">ApiGateway</string>
 
 </resources>

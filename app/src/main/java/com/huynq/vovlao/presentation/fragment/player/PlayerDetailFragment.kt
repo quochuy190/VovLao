@@ -107,9 +107,9 @@ class PlayerDetailFragment : BaseFragment() {
     }
 
     private fun loadInitialData(aSong: ASong) {
-        song_player_title_text_view.text = aSong.title
-        song_player_singer_name_text_view.text = aSong.artist
-        song_player_total_time_text_view.text = formatTimeInMillisToString(aSong.length?.toLong()?:0L)
+//        song_player_title_text_view.text = aSong.title
+//        song_player_singer_name_text_view.text = aSong.artist
+//        song_player_total_time_text_view.text = formatTimeInMillisToString(aSong.length?.toLong()?:0L)
 
 //        aSong.clipArt?.let {
 //            song_player_image_view.load(File(it)) {

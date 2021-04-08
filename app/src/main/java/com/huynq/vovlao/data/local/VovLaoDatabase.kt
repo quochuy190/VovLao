@@ -5,9 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.huynq.vovlao.data.local.dao.SongDao
 import com.huynq.vovlao.data.local.dao.UserDao
 import com.huynq.vovlao.data.local.entity.StringListConverter
 import com.huynq.vovlao.data.local.entity.UserEntity
+import com.huynq.vovlao.data.model.Song
 
 
 /**
@@ -17,11 +19,12 @@ import com.huynq.vovlao.data.local.entity.UserEntity
  * Time: 23:30
  * Version: 1.0
  */
-@Database(entities = arrayOf(UserEntity::class), version = 1)
+@Database(entities = arrayOf(UserEntity::class, Song::class), version = 1)
 @TypeConverters(StringListConverter::class)
 abstract class VovLaoDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun songDao(): SongDao
 
     companion object {
         private var INSTANCE: VovLaoDatabase? = null

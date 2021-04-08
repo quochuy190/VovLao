@@ -6,12 +6,16 @@ import android.telephony.TelephonyManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.huynq.vovlao.BuildConfig
 import com.huynq.vovlao.VoVApplication
 import com.huynq.vovlao.data.local.VovLaoDatabase
 import com.huynq.vovlao.data.local.entity.UserEntity
+import com.huynq.vovlao.data.model.Chanel
+import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.data.model.User
 import com.huynq.vovlao.data.remote.data.InitRequest
+import com.huynq.vovlao.data.repository.SongRepository
 import com.huynq.vovlao.data.repository.UserRepository
 import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.ApiResult
@@ -22,12 +26,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
+import java.nio.channels.Channel
 import kotlin.coroutines.CoroutineContext
 
 
-class IntroduceViewModel : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
     private var parentJob = Job()
 
     // By default all the coroutines launched in this scope should be using the Main dispatcher
@@ -35,22 +41,30 @@ class IntroduceViewModel : BaseViewModel() {
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
-    lateinit var repositoryUser: UserRepository
-    val loadUserRes: MutableLiveData<List<UserEntity>> = MutableLiveData()
-    init {
-        Timber.e("init")
-        val userchDao = VovLaoDatabase.getInstance(VoVApplication.instance)?.userDao()
-        repositoryUser = UserRepository(userchDao!!)
-    }
+    val songRepo  = SongRepository()
+    val loadSong: MutableLiveData<List<Song>> = MutableLiveData()
+
 
     override fun onCleared() {
         super.onCleared()
         Timber.e("here")
     }
 
+    fun loadAllUser(lifecycleOwner: LifecycleOwner) {
+        songRepo.loadStreaming().observe(lifecycleOwner, Observer {
+            loadSong.postValue(it)
+        })
+        // resRoom.postValue()
+    }
+    fun insert(songs: List<Song>) = scope.launch(Dispatchers.IO) {
+        songRepo.insertList(songs)
+    }
+    fun deleteStreaming() = scope.launch(Dispatchers.IO) {
+        songRepo.deleteStreaming()
+    }
+
     fun exeApi(lifecycleOwner: LifecycleOwner, uuid: String) {
-        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "abctest", ""+ BuildConfig.VERSION_NAME,1);
-        apiClient.apiInit(request        )
+        apiClient.getChannels("olala1", 1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading.postValue(true) }
@@ -58,17 +72,21 @@ class IntroduceViewModel : BaseViewModel() {
             .doOnError {
                 loading.postValue(false)
                 error.postValue(it)
-            }
-            .subscribe { t1: ApiResult<User>?, t2: Throwable? ->
+            }.subscribe { t1: ApiResult<List<Chanel>>?, t2: Throwable? ->
                 loading.postValue(false)
                 if (t1!=null){
                     if (t1!!.errorCode ==200){
-                        SharedPrefs.instance.put(ConstantCommon.KEY_USER_NAME, t1.data)
+                        deleteStreaming()
+                        val mListRoom: MutableList<Song> = ArrayList()
+                        Thread.sleep(100)
+                        for (song in t1.data!!){
+                            mListRoom.add(Song(song.id, song.description, song.link, song.description, song.logo, "", 3))
+                        }
+                        insert(mListRoom)
                     }
                 }else{
                     error.postValue(t2)
                 }
-
-            }
+             }
     }
 }
