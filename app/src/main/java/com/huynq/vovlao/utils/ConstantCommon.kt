@@ -11,5 +11,15 @@ object ConstantCommon {
     const val KEY_SEND_SWICH_FLOOR = "KEY_SEND_SWICH_FLOOR"
     const val KEY_SEND_SWICH_TYPE = "KEY_SEND_SWICH_TYPE"
     const val KEY_INSERT_AUTO_SCRIPT = "KEY_INSERT_AUTO_SCRIPT"
+    const val LANGUAGE = "LANGUAGE"
+
+
+    object Value {
+        const val DEFAULT_LANGUAGE_ID = 0
+    }
+
+    object RequestCode {
+        const val CHANGE_LANGUAGE = 10000
+    }
 
 }

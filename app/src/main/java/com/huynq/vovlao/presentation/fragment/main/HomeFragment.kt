@@ -200,7 +200,7 @@ class HomeFragment : BaseFragment() {
 //            })
 
             isPlayData.observe(this@HomeFragment, Observer {
-                icPlay.setImageResource(if (it) R.drawable.exo_icon_pause else R.drawable.exo_icon_play)
+                icPlay.setImageResource(if (it) R.drawable.ic_pause else R.drawable.ic_play)
             })
 
             playerData.observe(this@HomeFragment, Observer {

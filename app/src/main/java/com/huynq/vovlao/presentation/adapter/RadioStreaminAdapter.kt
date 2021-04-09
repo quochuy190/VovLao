@@ -37,6 +37,7 @@ class RadioStreaminAdapter internal constructor(
                 itemRoomBinding.llImg.background =
                     context.getDrawable(R.drawable.bgr_circle_default)
             }
+            Timber.e("url"+roomEntity.albumArt)
             Glide.with(context).load(roomEntity.albumArt)
                 .placeholder(R.drawable.menu_radio)
                 .into(itemRoomBinding.imgLogoRadio)

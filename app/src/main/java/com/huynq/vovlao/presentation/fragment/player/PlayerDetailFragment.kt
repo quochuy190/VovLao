@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import coil.request.CachePolicy
 import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
-import com.android.player.util.formatTimeInMillisToString
-import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.presentation.activity.MainActivity
