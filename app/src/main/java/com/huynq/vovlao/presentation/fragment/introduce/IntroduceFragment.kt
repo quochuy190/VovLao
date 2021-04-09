@@ -62,10 +62,15 @@ class IntroduceFragment : BaseFragment() {
     override fun initView() {
         adapterNews = context?.let {
             LanguageAdapter(it, doneClick = {
-
+                for (lan in mListLan){
+                    if (lan.id == it.id){
+                        lan.isChecked = true
+                    }else
+                        lan.isChecked = false
+                }
+                adapterNews.setDatas(mListLan)
             })
         }!!
-        rcvLanguage.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         rcvLanguage.apply { adapter = adapterNews }
         adapterNews.setDatas(LanguageUtils().getLanguageData() as List<Language>)
     }

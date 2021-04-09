@@ -24,18 +24,6 @@ class SharedPrefs private constructor(){
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(key: String, anonymousClass: Class<T>, defaultValue: T): T {
-        return when (anonymousClass) {
-            String::class.java -> mSharedPreferences.getString(key, defaultValue as String) as T
-            Boolean::class.java -> java.lang.Boolean.valueOf(mSharedPreferences.getBoolean(key, defaultValue as Boolean)) as T
-            Float::class.java -> java.lang.Float.valueOf(mSharedPreferences.getFloat(key, defaultValue as Float)) as T
-            Int::class.java -> Integer.valueOf(mSharedPreferences.getInt(key, defaultValue as Int)) as T
-            Long::class.java -> java.lang.Long.valueOf(mSharedPreferences.getLong(key, defaultValue as Long)) as T
-            else -> VoVApplication.instance?.gSon?.fromJson(mSharedPreferences.getString(key, ""), anonymousClass)!!
-        }
-    }
-
     fun <T> put(key: String, data: T) {
         val editor = mSharedPreferences.edit()
         when (data) {

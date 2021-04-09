@@ -5,6 +5,8 @@ import android.content.res.Resources
 import com.huynq.vovlao.R
 import com.huynq.vovlao.VoVApplication
 import com.huynq.vovlao.data.model.Language
+import com.huynq.vovlao.presentation.activity.IntroduceActivity
+import com.vbeeon.iotdbs.utils.launchActivity
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
 import java.util.*
 import kotlin.collections.ArrayList
@@ -14,7 +16,7 @@ class LanguageUtils {
     private var sCurrentLanguage: Language? = null
 
     //val arrImg : () -> Int = {R.drawable.ic_pause; R.drawable.ic_pause; R.drawable.ic_pause}
-    val arrImg: IntArray = intArrayOf(R.drawable.ic_pause, R.drawable.ic_pause, R.drawable.ic_pause)
+    val arrImg: IntArray = intArrayOf(R.drawable.flag_eng, R.drawable.flag_laos, R.drawable.flag_vn)
     fun getCurrentLanguage(): Language? {
         if (sCurrentLanguage == null) {
             sCurrentLanguage = initCurrentLanguage()
@@ -26,17 +28,20 @@ class LanguageUtils {
      * check language exist in SharedPrefs, if not exist then default language is English
      */
     private fun initCurrentLanguage(): Language {
-        var currentLanguage: Language =
-            SharedPrefs.instance.get(ConstantCommon.LANGUAGE, Language::class.java)
-        if (currentLanguage != null) {
-            return currentLanguage
+        var currentLanguage: Language?
+        val isFirs =
+            SharedPrefs.instance.get(ConstantCommon.IS_FIRST_OPEN_APP, Boolean::class.java)
+        if (!isFirs) {
+            currentLanguage = Language(
+                ConstantCommon.Value.DEFAULT_LANGUAGE_ID,
+                VoVApplication.instance.getString(R.string.language_english),
+                VoVApplication.instance.getString(R.string.language_english_code), arrImg[0],true
+            )
+            SharedPrefs.instance.put(ConstantCommon.LANGUAGE, currentLanguage)
+        } else {
+            currentLanguage =
+                SharedPrefs.instance.get(ConstantCommon.LANGUAGE, Language::class.java)!!
         }
-        currentLanguage = Language(
-            ConstantCommon.Value.DEFAULT_LANGUAGE_ID,
-            VoVApplication.instance.getString(R.string.language_english),
-            VoVApplication.instance.getString(R.string.language_english_code),  true
-        )
-        SharedPrefs.instance.put(ConstantCommon.LANGUAGE, currentLanguage)
         return currentLanguage
     }
 
@@ -57,9 +62,9 @@ class LanguageUtils {
         val size = languageNames.size
         while (i < size) {
             if (i == getCurrentLanguage()!!.id) {
-                languageList.add(Language(i, languageNames[i], languageCodes[i], true))
+                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i],true))
             } else
-                languageList.add(Language(i, languageNames[i], languageCodes[i],  false))
+                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i],false))
             i++
         }
         return languageList

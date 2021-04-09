@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Language
 import com.huynq.vovlao.databinding.ItemLanguageBinding
+import com.vbeeon.iotdbs.utils.gone
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
+import com.vbeeon.iotdbs.utils.visible
 import timber.log.Timber
 
 
-class LanguageAdapter internal constructor(var context: Context, val doneClick: (Int) -> Unit) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
+class LanguageAdapter internal constructor(var context: Context, val doneClick: (Language) -> Unit) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
     private var listScript = emptyList<Language>() // Cached copy of words
 
     inner class ViewHolder(itemBinding: ItemLanguageBinding) : RecyclerView.ViewHolder(itemBinding.getRoot()) {
@@ -22,10 +24,12 @@ class LanguageAdapter internal constructor(var context: Context, val doneClick: 
             itemRoomBinding.data = roomEntity
             itemRoomBinding.executePendingBindings()
             if (roomEntity!!.isChecked){
+                itemRoomBinding.cbLanguage.visible()
                 itemRoomBinding.cbLanguage.setImageDrawable(context.getDrawable(R.drawable.ic_check_active))
             }else{
-                itemRoomBinding.cbLanguage.setImageDrawable(context.getDrawable(R.drawable.ic_check_normal))
+                itemRoomBinding.cbLanguage.gone()
             }
+            itemRoomBinding.imgLanguage.setImageDrawable(context.getDrawable(roomEntity.imgSource))
         }
 
         init {
@@ -45,7 +49,7 @@ class LanguageAdapter internal constructor(var context: Context, val doneClick: 
         holder.bind(listScript[position])
         holder.itemView.setOnSafeClickListener {
             Timber.d("click item")
-            doneClick(position)
+            doneClick(listScript[position])
         }
 
     }
