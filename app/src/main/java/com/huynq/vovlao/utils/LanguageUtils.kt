@@ -16,7 +16,7 @@ class LanguageUtils {
     private var sCurrentLanguage: Language? = null
 
     //val arrImg : () -> Int = {R.drawable.ic_pause; R.drawable.ic_pause; R.drawable.ic_pause}
-    val arrImg: IntArray = intArrayOf(R.drawable.flag_eng, R.drawable.flag_laos, R.drawable.flag_vn)
+    val arrImg: IntArray = intArrayOf(R.drawable.flag_eng, R.drawable.flag_vn, R.drawable.flag_laos)
     fun getCurrentLanguage(): Language? {
         if (sCurrentLanguage == null) {
             sCurrentLanguage = initCurrentLanguage()

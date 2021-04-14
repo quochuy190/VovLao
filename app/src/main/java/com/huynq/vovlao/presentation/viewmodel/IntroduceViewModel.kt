@@ -13,6 +13,7 @@ import com.huynq.vovlao.data.local.entity.UserEntity
 import com.huynq.vovlao.data.model.User
 import com.huynq.vovlao.data.remote.data.InitRequest
 import com.huynq.vovlao.data.repository.UserRepository
+import com.huynq.vovlao.utils.LanguageUtils
 import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.ApiResult
 import com.vbeeon.iotdbs.data.remote.ApiClient
@@ -36,7 +37,7 @@ class IntroduceViewModel : BaseViewModel() {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
     lateinit var repositoryUser: UserRepository
-    val loadUserRes: MutableLiveData<List<UserEntity>> = MutableLiveData()
+    val loadInit: MutableLiveData<Boolean> = MutableLiveData()
     init {
         Timber.e("init")
         val userchDao = VovLaoDatabase.getInstance(VoVApplication.instance)?.userDao()
@@ -48,8 +49,8 @@ class IntroduceViewModel : BaseViewModel() {
         Timber.e("here")
     }
 
-    fun exeApi(lifecycleOwner: LifecycleOwner, uuid: String) {
-        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "abctest", ""+ BuildConfig.VERSION_NAME,1);
+    fun exeApi(lifecycleOwner: LifecycleOwner, uuid: String, lanCode: Int) {
+        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "abctest", ""+ BuildConfig.VERSION_NAME,""+lanCode);
         apiClient.apiInit(request        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +64,9 @@ class IntroduceViewModel : BaseViewModel() {
                 loading.postValue(false)
                 if (t1!=null){
                     if (t1!!.errorCode ==200){
+                        LanguageUtils().loadLocale()
                         SharedPrefs.instance.put(ConstantCommon.KEY_USER_NAME, t1.data)
+                        loadInit.postValue(true)
                     }
                 }else{
                     error.postValue(t2)

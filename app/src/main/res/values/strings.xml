@@ -10,7 +10,7 @@
     <string name="title_newpage">News</string>
     <string name="title_replay">Replay</string>
     <string name="title_setup">Setting</string>
-
+    <string name="btn_next">Next</string>
     <string name="notification_channel">APP_Channel_ID</string>
     <string name="lable_epg">LỊCH PHÁT THANH</string>
     <string name="notification_channel_description">Channel ID for APP</string>
@@ -30,23 +30,22 @@ Theo đó, Ủy ban Thường vụ Quốc hội đã xem xét và nhất trí th
     <!--untranslatable-->
     //language
     <string name="language_english" translatable="false">English</string>
-    <string name="language_lao" translatable="false">ລາວ</string>
     <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
-
+    <string name="language_lao" translatable="false">ລາວ</string>
     <string-array name="language_names">
         <item>@string/language_english</item>
-        <item>@string/language_lao</item>
         <item>@string/language_vietnamese</item>
+        <item>@string/language_lao</item>
     </string-array>
 
     <string name="language_english_code" translatable="false">en</string>
-    <string name="language_lao_code" translatable="false">la0</string>
+    <string name="language_lao_code" translatable="false">lo</string>
     <string name="language_vietnamese_code" translatable="false">vi</string>
 
     <string-array name="language_codes">
         <item>@string/language_english_code</item>
-        <item>@string/language_lao_code</item>
         <item>@string/language_vietnamese_code</item>
+        <item>@string/language_lao_code</item>
     </string-array>
 
 

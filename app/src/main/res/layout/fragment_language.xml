@@ -8,6 +8,7 @@
     android:background="@color/white">
 
 <androidx.recyclerview.widget.RecyclerView
+    android:background="@color/grey_20"
     android:id="@+id/rcvLanguage"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -15,12 +16,29 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintWidth_percent="0.7"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-    app:spanCount="3"
+    app:spanCount="1"
     tools:itemCount="3"
     tools:listitem="@layout/item_language"
-    android:layout_width="0dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 
+    <Button
+        app:layout_constraintVertical_bias="0.9"
+        android:id="@+id/btnNext"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.75"
+        android:textAllCaps="false"
+        android:textSize="@dimen/sp_18"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="#FFFFFF"
+        android:text="@string/btn_next"
+        android:background="@drawable/bgr_button"
+        android:layout_centerHorizontal="true"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_50dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
