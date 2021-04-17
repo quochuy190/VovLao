@@ -11,12 +11,11 @@ import com.huynq.vovlao.BuildConfig
 import com.huynq.vovlao.VoVApplication
 import com.huynq.vovlao.data.local.VovLaoDatabase
 import com.huynq.vovlao.data.local.entity.UserEntity
-import com.huynq.vovlao.data.model.Chanel
-import com.huynq.vovlao.data.model.Song
-import com.huynq.vovlao.data.model.User
+import com.huynq.vovlao.data.model.*
 import com.huynq.vovlao.data.remote.data.InitRequest
 import com.huynq.vovlao.data.repository.SongRepository
 import com.huynq.vovlao.data.repository.UserRepository
+import com.huynq.vovlao.utils.LanguageUtils
 import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.ApiResult
 import com.vbeeon.iotdbs.data.remote.ApiClient
@@ -43,8 +42,9 @@ class HomeViewModel : BaseViewModel() {
     private val scope = CoroutineScope(coroutineContext)
     val songRepo  = SongRepository()
     val loadSong: MutableLiveData<List<Song>> = MutableLiveData()
-
-
+    val mListProgram: MutableLiveData<List<Epg>> = MutableLiveData()
+    val mUser: User = SharedPrefs.instance.get(ConstantCommon.KEY_USER_NAME, User::class.java)
+    val mLanguage: Language = LanguageUtils().getCurrentLanguage()!!
     override fun onCleared() {
         super.onCleared()
         Timber.e("here")
@@ -63,8 +63,8 @@ class HomeViewModel : BaseViewModel() {
         songRepo.deleteStreaming()
     }
 
-    fun exeApi(lifecycleOwner: LifecycleOwner, uuid: String) {
-        apiClient.getChannels("olala1", 1)
+    fun exeApiGetChannel() {
+        apiClient.getChannels(mUser.userId, mLanguage.id+1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading.postValue(true) }
@@ -80,7 +80,7 @@ class HomeViewModel : BaseViewModel() {
                         val mListRoom: MutableList<Song> = ArrayList()
                         Thread.sleep(100)
                         for (song in t1.data!!){
-                            mListRoom.add(Song(song.id, song.description, song.link, song.description, song.logo, "", 3))
+                            mListRoom.add(Song(song.id, song.description, song.link, song.description, song.logo, "30000", 3))
                         }
                         insert(mListRoom)
                     }
@@ -88,5 +88,25 @@ class HomeViewModel : BaseViewModel() {
                     error.postValue(t2)
                 }
              }
+    }
+
+    fun exeApiProgram(idChannel: Int) {
+        apiClient.getProgram(mUser.userId, mLanguage.id+1, idChannel)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loading.postValue(true) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                error.postValue(it)
+            }.subscribe { t1: ApiResult<List<Epg>>?, t2: Throwable? ->
+                if (t1!=null){
+                    if (t1!!.errorCode ==200){
+                        Timber.e(""+t1)
+                        mListProgram.postValue(t1.data)
+                    }
+                }else{
+                    error.postValue(t2)
+                }
+            }
     }
 }

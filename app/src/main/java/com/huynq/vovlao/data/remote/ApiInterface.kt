@@ -1,13 +1,12 @@
 package com.vbeeon.iotdbs.data.remote
 
 import com.huynq.vovlao.data.model.Chanel
+import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.User
 import com.huynq.vovlao.data.remote.data.InitRequest
 import com.vbeeon.iotdbs.data.model.ApiResult
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
-import java.nio.channels.Channel
 
 interface ApiInterface {
 
@@ -20,11 +19,20 @@ interface ApiInterface {
     fun getMovieDetails(@Path("movie_id") id: Int): Single<User>
 
     @POST("/users")
-    fun apiInit(@Body userDto: InitRequest): Single< ApiResult<User>>
+    fun apiInit(@Body userDto: InitRequest): Single<ApiResult<List<User>>>
 
-    @GET("/chanel?")
-    fun getChannels(@Query("userid") userid: String,
-                @Query("languageid") languageid: Int): Single<ApiResult<List<Chanel>>>
+    @GET("/channel?")
+    fun getChannels(
+        @Query("userId") userid: String,
+        @Query("languageId") languageid: Int
+    ): Single<ApiResult<List<Chanel>>>
+
+    @GET("/program?")
+    fun getProgram(
+        @Query("userId") userid: String,
+        @Query("languageId") languageid: Int,
+        @Query("channelId") channelId: Int
+    ): Single<ApiResult<List<Epg>>>
 
 
 //    @POST("api/v1/subscriber/login")

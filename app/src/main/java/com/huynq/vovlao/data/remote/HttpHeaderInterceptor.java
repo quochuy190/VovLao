@@ -13,7 +13,7 @@ public class HttpHeaderInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         Request request = chain.request().newBuilder()
-                .addHeader("Content-Type", "application/json")
+                .addHeader("Content-Type", "application/json; charset=utf-8")
                 .addHeader("accept", "*/*")
                 .build();
         return chain.proceed(request);

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.Song
@@ -23,17 +24,8 @@ class EPGAdapter internal constructor(var context: Context, val doneClick: (Int)
         fun bind(roomEntity: Epg?) {
             itemRoomBinding.data = roomEntity
             itemRoomBinding.executePendingBindings()
-//            if (roomEntity!!.isSelected){
-//                val sysTitle = "<b><font color='#000000'>"+roomEntity.name+"</font></b>"
-//                itemRoomBinding.tvTimeCalName.text = setTextHTML(sysTitle)
-//               // itemRoomBinding.tvTimeCalName.setTextColor(Color.parseColor("#026BBE"));
-////                itemRoomBinding.tvTimeCalName.typeface = Typeface.DEFAULT_BOLD
-//            }else{
-//                val sysTitle = "<font color='#cccccc'>"+roomEntity.name+"</font>"
-//                itemRoomBinding.tvTimeCalName.text = setTextHTML(sysTitle)
-////                itemRoomBinding.tvTimeCalName.setTextColor(Color.parseColor("#FF000000"));
-////                itemRoomBinding.tvTimeCalName.typeface = Typeface.DEFAULT
-//            }
+            Glide.with(context).load(roomEntity!!.programImage).placeholder(R.color.gray).into(itemRoomBinding.imgCoverEpg)
+            itemRoomBinding.tvTime.text = roomEntity.timeStart +" - "+roomEntity.endTime
         }
 
         init {

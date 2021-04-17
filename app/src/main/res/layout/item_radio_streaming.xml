@@ -9,27 +9,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardCircle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_7dp"
-        android:layout_marginEnd="@dimen/dimen_7dp"
+        android:paddingHorizontal="@dimen/dimen_5dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/llImg"
-            app:layout_constraintWidth_percent="0.75"
             android:background="@drawable/bgr_circle_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="1:1"
-            android:layout_width="0dp"
-            android:layout_height="0dp">
+            android:layout_width="50dp"
+            android:layout_height="50dp">
             <ImageView
                 android:id="@+id/imgLogoRadio"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:padding="@dimen/dimen_10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="@dimen/dimen_5dp"
                 android:src="@drawable/menu_radio"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
@@ -42,7 +41,7 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:duplicateParentState="true"
@@ -52,11 +51,10 @@
             android:padding="@dimen/dimen_5dp"
             android:text="@{data.songName}"
             android:textColor="@color/appBar"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold"
+            android:textSize="@dimen/sp_14"
             app:layout_constraintEnd_toEndOf="@+id/llImg"
             app:layout_constraintStart_toStartOf="@+id/llImg"
-            app:layout_constraintTop_toBottomOf="@+id/llImg" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

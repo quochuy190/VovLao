@@ -4,14 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.Song
+import com.huynq.vovlao.data.model.User
 import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.EPGAdapter
 import com.huynq.vovlao.presentation.adapter.ImagesAdapter
@@ -74,10 +77,12 @@ class HomeFragment : BaseFragment() {
     override fun initView() {
         radioAdapter = context?.let {
             RadioStreaminAdapter(it, doneClick = {
-                (context as MainActivity).play(mASongList, mSongList[it])
+                val song = mSongList[it]
+                (context as MainActivity).play(mASongList, song)
+                homeViewModel.exeApiProgram(song.id)
             })
         }!!
-        rcvRadioStreaming.layoutManager = GridLayoutManager(activity, 4)
+        rcvRadioStreaming.layoutManager =LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         rcvRadioStreaming.apply { adapter = radioAdapter }
         val song = Song(0, "VOV1", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3", "artist",
                 "albumArt", "30000", 3, false)
@@ -93,7 +98,7 @@ class HomeFragment : BaseFragment() {
 //        mSongList.add(song1)
 //        mSongList.add(song2)
 //        mSongList.add(song3)
-
+//
 //        mASongList!!.add(song)
 //        mASongList!!.add(song1)
 //        mASongList!!.add(song2)
@@ -131,10 +136,10 @@ class HomeFragment : BaseFragment() {
         }!!
         rcvEPG.layoutManager = GridLayoutManager(activity, 1)
         rcvEPG.apply { adapter = epgAdapter }
-        for( i in 0..5){
-            val obj = Epg(i, "VOV1", getString(R.string.tv_sort_news_demo), "6h:30")
-            mEpgList.add(obj)
-        }
+//        for( i in 0..5){
+//            val obj = Epg(i, "VOV1", getString(R.string.tv_sort_news_demo), "6h:30")
+//            mEpgList.add(obj)
+//        }
         epgAdapter.setDatas(mEpgList)
     }
 
@@ -162,15 +167,22 @@ class HomeFragment : BaseFragment() {
         })
         //homeViewModel.insert(mSongList)
         homeViewModel.loadAllUser(this)
-        homeViewModel.exeApi(this, "")
+        homeViewModel.exeApiGetChannel()
     }
 
     override fun observable() {
         homeViewModel.loadSong.observe(this, Observer {
             Timber.e("list"+it.size)
             mSongList.clear()
+            mASongList!!.clear()
+            mASongList!!.addAll(it)
             mSongList.addAll(it)
             radioAdapter.setDatas(it)
+        })
+        homeViewModel.mListProgram.observe(this, Observer {
+            mEpgList.clear()
+            mEpgList.addAll(it)
+            epgAdapter.setDatas(mEpgList)
         })
         with(songPlayerViewModel) {
 
@@ -200,7 +212,7 @@ class HomeFragment : BaseFragment() {
 //            })
 
             isPlayData.observe(this@HomeFragment, Observer {
-                icPlay.setImageResource(if (it) R.drawable.ic_pause else R.drawable.ic_play)
+                icPlay.setImageResource(if (it) R.drawable.ic_play else R.drawable.ic_pause)
             })
 
             playerData.observe(this@HomeFragment, Observer {

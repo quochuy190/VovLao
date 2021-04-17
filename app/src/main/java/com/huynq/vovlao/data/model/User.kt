@@ -5,8 +5,7 @@ data class User(
     val uuid: String,
     val deviceType: Int,
     val versionOs: String,
-    val tokenKey:
-    String,
+    val tokenKey: String,
     val appVersion: String,
     val userId: String,
     val state: Int,

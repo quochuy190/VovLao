@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.huynq.vovlao.VoVApplication
 import com.huynq.vovlao.data.local.VovLaoDatabase
 import com.huynq.vovlao.data.local.entity.UserEntity
+import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.repository.UserRepository
 import com.vbeeon.iotdbs.data.model.ApiResult
 import com.vbeeon.iotdbs.data.remote.ApiClient
@@ -64,22 +65,23 @@ class NewsViewModel : BaseViewModel() {
         repositoryUser.deleteUser(user)
     }
 
-    fun exeApi(lifecycleOwner: LifecycleOwner, pass: String) {
-//        val request = LoginSuperVisorRequest();
-//        Timber.e("call loginRemote")
-//        request.password = "fd6aa3889d2415bcbc13803f303f1137"
-//        request.uuid = "e92947d6-2dcf-3375-b3c8-7789f969de6a"
-//
-//        val requestLogin = LoginRequest();
-//        Timber.e("call loginRemote")
-//        requestLogin.password = "fd6aa3889d2415bcbc13803f303f1137"
-//        requestLogin.username = "e92947d6-2dcf-3375-b3c8-7789f969de6a"
-//        apiFloor1.loginSupervisor(request)
+    fun exeGetNewCategory(idChannel: Int) {
+//        apiClient.getProgram(mUser.userId, mLanguage.id+1, idChannel)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
-//            .flatMap({ it -> apiFloor2.login(requestLogin) })
-//            .subscribe { t1: ApiResult<LoginEntity>?, t2: Throwable? ->
-//                loading.postValue(false)
+//            .doOnSubscribe { loading.postValue(true) }
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnError {
+//                error.postValue(it)
+//            }.subscribe { t1: ApiResult<List<Epg>>?, t2: Throwable? ->
+//                if (t1!=null){
+//                    if (t1!!.errorCode ==200){
+//                        Timber.e(""+t1)
+//                        mListProgram.postValue(t1.data)
+//                    }
+//                }else{
+//                    error.postValue(t2)
+//                }
 //            }
     }
 }

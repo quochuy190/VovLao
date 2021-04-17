@@ -37,7 +37,7 @@ class IntroduceFragment : BaseFragment() {
     var codeLan = 1
     var language: Language? = null
     lateinit var mainViewModel: IntroduceViewModel
-    val mListLan: MutableList<Language> = ArrayList()
+    var mListLan: MutableList<Language> = ArrayList()
     lateinit var adapterNews: LanguageAdapter
 
     companion object {
@@ -82,7 +82,8 @@ class IntroduceFragment : BaseFragment() {
             })
         }!!
         rcvLanguage.apply { adapter = adapterNews }
-        adapterNews.setDatas(LanguageUtils().getLanguageData() as List<Language>)
+        mListLan = LanguageUtils().getLanguageData() as MutableList<Language>
+        adapterNews.setDatas(mListLan)
         btnNext.setOnSafeClickListener {
             getApiInit(codeLan)
         }
@@ -90,7 +91,7 @@ class IntroduceFragment : BaseFragment() {
 
     private fun getApiInit(codeLanguage: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getUUID()?.let { mainViewModel.exeApi(this, it, codeLanguage) }
+            getUUID()?.let { mainViewModel.exeApi(it, codeLanguage) }
         }
     }
 
@@ -100,11 +101,18 @@ class IntroduceFragment : BaseFragment() {
     }
 
     override fun observable() {
+        mainViewModel.loading.observeForever(this::showProgressDialog)
+        mainViewModel.error.observeForever({ throwable ->
+            showDialogMessage(context, getString(R.string.system_error))
+            // initViewPager();
+        })
         mainViewModel.loadInit.observe(this, Observer {
             if (it) {
                 SharedPrefs.instance.put(ConstantCommon.LANGUAGE, language)
+                SharedPrefs.instance.put(ConstantCommon.IS_FIRST_OPEN_APP,true)
                 LanguageUtils().loadLocale()
                 (activity as IntroduceActivity).launchActivity<MainActivity>()
+                (activity as IntroduceActivity).finish()
             }
         })
 

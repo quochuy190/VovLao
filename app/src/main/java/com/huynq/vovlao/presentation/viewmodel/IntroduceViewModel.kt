@@ -49,9 +49,9 @@ class IntroduceViewModel : BaseViewModel() {
         Timber.e("here")
     }
 
-    fun exeApi(lifecycleOwner: LifecycleOwner, uuid: String, lanCode: Int) {
-        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "abctest", ""+ BuildConfig.VERSION_NAME,""+lanCode);
-        apiClient.apiInit(request        )
+    fun exeApi( uuid: String, lanCode: Int) {
+        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "test", ""+ BuildConfig.VERSION_NAME,""+lanCode);
+        apiClient.apiInit(request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading.postValue(true) }
@@ -60,12 +60,12 @@ class IntroduceViewModel : BaseViewModel() {
                 loading.postValue(false)
                 error.postValue(it)
             }
-            .subscribe { t1: ApiResult<User>?, t2: Throwable? ->
+            .subscribe { t1: ApiResult<List<User>>?, t2: Throwable? ->
                 loading.postValue(false)
                 if (t1!=null){
                     if (t1!!.errorCode ==200){
-                        LanguageUtils().loadLocale()
-                        SharedPrefs.instance.put(ConstantCommon.KEY_USER_NAME, t1.data)
+                       // LanguageUtils().loadLocale()
+                        SharedPrefs.instance.put(ConstantCommon.KEY_USER_NAME, t1.data?.get(0))
                         loadInit.postValue(true)
                     }
                 }else{
