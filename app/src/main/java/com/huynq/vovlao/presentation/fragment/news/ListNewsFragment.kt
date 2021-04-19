@@ -70,6 +70,8 @@ class ListNewsFragment : BaseFragment() {
 
     override fun observable() {
         mainViewModel.loadNews.observe(this, Observer {
+            mListNews.clear()
+            mListNews.addAll(it)
             adapterNews.setDatas(it)
         })
     }

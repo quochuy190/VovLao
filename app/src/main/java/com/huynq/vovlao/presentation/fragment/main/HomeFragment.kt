@@ -51,6 +51,23 @@ class HomeFragment : BaseFragment() {
     override fun getLayoutRes(): Int {
         return R.layout.fragment_home
     }
+    companion object {
+        fun newInstance(): HomeFragment {
+            val fragment = HomeFragment()
+            val args = Bundle()
+           // args.putBoolean("isChangeLanguage", isChange)
+            fragment.setArguments(args)
+            return fragment
+        }
+    }
+
+    var isChange = false
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+//        arguments?.getBoolean("isChangeLanguage")?.let {
+//            isChange = it
+//        }
+    }
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)

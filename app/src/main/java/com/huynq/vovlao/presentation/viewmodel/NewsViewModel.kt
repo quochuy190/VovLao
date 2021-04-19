@@ -38,7 +38,8 @@ class NewsViewModel : BaseViewModel() {
     private val scope = CoroutineScope(coroutineContext)
     val loadNewsCategory: MutableLiveData<List<NewCategory>> = MutableLiveData()
     val loadNews: MutableLiveData<List<News>> = MutableLiveData()
-    val loadNewDetail: MutableLiveData<List<News>> = MutableLiveData()
+    val loadNewDetail: MutableLiveData<News> = MutableLiveData()
+
     init {
         Timber.e("init")
     }
@@ -105,7 +106,7 @@ class NewsViewModel : BaseViewModel() {
                 if (t1!=null){
                     if (t1!!.errorCode ==200){
                         Timber.e(""+t1)
-                        loadNewDetail.postValue(t1.data)
+                        loadNewDetail.postValue(t1.data?.get(0))
                     }
                 }else{
                     error.postValue(t2)

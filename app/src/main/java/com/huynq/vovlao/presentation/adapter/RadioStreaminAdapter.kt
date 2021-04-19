@@ -33,14 +33,16 @@ class RadioStreaminAdapter internal constructor(
             if (roomEntity!!.isSelected) {
                 itemRoomBinding.llImg.background =
                     context.getDrawable(R.drawable.bgr_circle_selected)
+                itemRoomBinding.imgLogoRadio.setImageResource(R.drawable.ic_streaming_radio_white)
             } else {
                 itemRoomBinding.llImg.background =
                     context.getDrawable(R.drawable.bgr_circle_default)
+                itemRoomBinding.imgLogoRadio.setImageResource(R.drawable.ic_streaming_radio)
             }
             Timber.e("url"+roomEntity.albumArt)
-            Glide.with(context).load(roomEntity.albumArt)
-                .placeholder(R.drawable.menu_radio)
-                .into(itemRoomBinding.imgLogoRadio)
+//            Glide.with(context).load(roomEntity.albumArt)
+//                .placeholder(R.drawable.menu_radio)
+//                .into(itemRoomBinding.imgLogoRadio)
         }
 
         init {

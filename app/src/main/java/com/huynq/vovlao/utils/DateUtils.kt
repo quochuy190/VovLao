@@ -23,7 +23,7 @@ class DateUtils {
 
     }
     fun convertString(dateStart: String): String{
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
         try {
             val date = convertDate(dateStart)
             val dateTime = dateFormat.format(date)

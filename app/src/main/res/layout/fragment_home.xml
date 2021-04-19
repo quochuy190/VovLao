@@ -31,7 +31,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintHeight_percent="0.12"
-        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_7dp"
         android:id="@+id/rcvRadioStreaming"
         app:layout_constraintTop_toBottomOf="@+id/vpAutoScroll"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llControl"
-        android:layout_marginTop="@dimen/dimen_2dp"
+        android:layout_marginTop="@dimen/dimen_7dp"
         android:background="@color/bg_circle_selected"
         android:padding="@dimen/dimen_7dp"
         app:layout_constraintHeight_percent="0.1"

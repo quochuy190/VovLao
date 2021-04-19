@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
+    <com.google.android.material.tabs.TabLayout 
+        android:background="#EEF2F4"
         app:tabSelectedTextColor="@color/appBar"
         app:tabTextColor="@color/grey_80_switch"
         app:tabIconTint="@color/item_text_selector"

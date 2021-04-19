@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Epg
 import com.huynq.vovlao.data.model.News
@@ -33,6 +34,7 @@ class NewsAdapter internal constructor(var context: Context, val doneClick: (Int
                 itemRoomBinding.tvSortDesNews.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
             }
             itemRoomBinding.tvDateTimeNews.text = DateUtils().convertString(roomEntity!!.dateTime)
+            Glide.with(context).load(roomEntity.urlCover).placeholder(R.color.gray).into(itemRoomBinding.imgCoverNews)
         }
 
         init {

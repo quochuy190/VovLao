@@ -47,7 +47,7 @@ interface ApiInterface {
         @Query("offset") offset: Int
     ): Single<ApiResult<List<News>>>
 
-    @GET("/newsDetail?")
+    @GET("/news/newsDetail?")
     fun getNewsDetail(
         @Query("userId") userid: String,
         @Query("languageId") languageid: Int,

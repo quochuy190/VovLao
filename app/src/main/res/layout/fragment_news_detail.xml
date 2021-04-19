@@ -1,81 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
-    <include layout="@layout/toolbar_main"/>
-    <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toBottomOf="@+id/appBarMain"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.huynq.vovlao.presentation.viewmodel.NewsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <include layout="@layout/toolbar_main"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imgCoverNewsDetail"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_cover_news"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintDimensionRatio="2:1"
-                app:layout_constraintTop_toBottomOf="@+id/appBarMain"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="0dp"
-                android:layout_height="0dp"/>
 
-            <TextView
-                android:layout_marginStart="@dimen/dimen_7dp"
-                android:layout_marginEnd="@dimen/dimen_7dp"
-                android:layout_marginTop="@dimen/dimen_7dp"
-                android:id="@+id/tvTitleDetail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="left"
-                android:maxLines="2"
-                android:textColor="@color/appBar"
-                android:textSize="@dimen/sp_16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgCoverNewsDetail" />
-            <TextView
-                android:layout_marginStart="@dimen/dimen_7dp"
-                android:layout_marginEnd="@dimen/dimen_7dp"
-                android:layout_marginTop="@dimen/dimen_5dp"
-                android:id="@+id/tvDateTimeNewsDetail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="left"
-                android:maxLines="1"
-                android:textColor="@color/appBar"
-                android:textSize="@dimen/sp_15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitleDetail" />
-            <TextView
-                android:layout_marginStart="@dimen/dimen_7dp"
-                android:layout_marginEnd="@dimen/dimen_7dp"
-                android:layout_marginTop="@dimen/dimen_5dp"
-                android:id="@+id/tvDescriptionNews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="left"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateTimeNewsDetail" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imgCoverNewsDetail"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintTop_toBottomOf="@+id/appBarMain"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:fontFamily="@font/roboto_bold"
+            android:text="@{data.loadNewDetail.title}"
+            android:layout_marginStart="@dimen/dimen_7dp"
+            android:layout_marginEnd="@dimen/dimen_7dp"
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:id="@+id/tvTitleDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:textColor="@color/appBar"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgCoverNewsDetail" />
+        <TextView
+            android:layout_marginStart="@dimen/dimen_7dp"
+            android:layout_marginEnd="@dimen/dimen_7dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:id="@+id/tvDateTimeNewsDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:textColor="@color/appBar"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleDetail" />
+        <WebView
+            android:layout_marginStart="@dimen/dimen_7dp"
+            android:layout_marginEnd="@dimen/dimen_7dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:id="@+id/wvDetail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateTimeNewsDetail" />
 
-</androidx.constraintlayout.widget.ConstraintLayout >
+    </androidx.constraintlayout.widget.ConstraintLayout >
+</layout>

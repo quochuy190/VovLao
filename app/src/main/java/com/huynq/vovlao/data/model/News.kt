@@ -14,7 +14,8 @@ data class News(
     val urlCover: String,
     val sortDes: String,
     @SerializedName("description")
-    val description: String, @SerializedName("details")
+    val description: String,
+    @SerializedName("details")
     val details: String,
     @SerializedName("createTime")
     val dateTime: String

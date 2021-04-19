@@ -17,11 +17,9 @@ import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Language
 import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.MessageEventBus
-import kotlinx.android.synthetic.main.fragment_replay.view.*
 import org.greenrobot.eventbus.EventBus
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback {
@@ -40,6 +38,7 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         progressDialog.setMessage(this.getString(R.string.loading))
         progressDialog.setCancelable(false)
     }
+
     fun showProgress() {
         if (!progressDialog.isShowing) progressDialog.show()
     }
@@ -47,6 +46,7 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     fun dismissProgress() {
         if (progressDialog.isShowing) progressDialog.dismiss()
     }
+
     private val mHandler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -83,7 +83,11 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     }
 
     private fun bindPlayerService() {
-        if (!mBound) bindService(Intent(this, SongPlayerService::class.java), mConnection, Context.BIND_AUTO_CREATE)
+        if (!mBound) bindService(
+            Intent(this, SongPlayerService::class.java),
+            mConnection,
+            Context.BIND_AUTO_CREATE
+        )
     }
 
 
@@ -157,7 +161,7 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         if (isPlay)
             EventBus.getDefault().post(MessageEventBus(1, "", null))
         songPlayerViewModel.setPlayStatus(isPlay)
-       // EventBus.getDefault().post(MessageEvent())
+        // EventBus.getDefault().post(MessageEvent())
     }
 
     override fun updateSongProgress(duration: Long, position: Long) {
@@ -174,14 +178,14 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         songPlayerViewModel.setVisibility(isVisibility)
     }
 
-    private fun unbindService(){
+    private fun unbindService() {
         if (mBound) {
             unbindService(mConnection)
             mBound = false
         }
     }
 
-    override fun stopService(){
+    override fun stopService() {
         unbindService()
         mService = null
     }
@@ -199,6 +203,7 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         private const val ACTION_PAUSE = 2
         private const val ACTION_STOP = 3
     }
+
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)
         val config = Configuration()
@@ -221,7 +226,15 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
             }
         }
         // Please Get your language code from some storage like shared preferences
-        val languageCode = SharedPrefs.instance.get(ConstantCommon.LANGUAGE, Language::class.java).code
+        val isFirs =
+            SharedPrefs.instance.get(ConstantCommon.IS_FIRST_OPEN_APP, Boolean::class.java)
+        var languageCode: String = ""
+        if (isFirs) {
+            val language = SharedPrefs.instance.get(ConstantCommon.LANGUAGE, Language::class.java)
+            if (language != null) {
+                languageCode = language.code
+            }
+        }
         val locale = Locale(languageCode)
         if (locale != null) {
             // Configuration.setLocale is added after 17 and Configuration.locale is deprecated
