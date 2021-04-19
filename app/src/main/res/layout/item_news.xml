@@ -60,7 +60,7 @@
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="3"
-            android:text="@{data.sortDes}"
+            android:text="@{data.description}"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"

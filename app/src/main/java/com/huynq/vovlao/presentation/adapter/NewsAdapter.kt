@@ -14,6 +14,7 @@ import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.databinding.ItemEpgHomeBinding
 import com.huynq.vovlao.databinding.ItemNewsBinding
 import com.huynq.vovlao.databinding.ItemRadioStreamingBinding
+import com.huynq.vovlao.utils.DateUtils
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import timber.log.Timber
 
@@ -31,17 +32,7 @@ class NewsAdapter internal constructor(var context: Context, val doneClick: (Int
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 itemRoomBinding.tvSortDesNews.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
             }
-//            if (roomEntity!!.isSelected){
-//                val sysTitle = "<b><font color='#000000'>"+roomEntity.name+"</font></b>"
-//                itemRoomBinding.tvTimeCalName.text = setTextHTML(sysTitle)
-//               // itemRoomBinding.tvTimeCalName.setTextColor(Color.parseColor("#026BBE"));
-////                itemRoomBinding.tvTimeCalName.typeface = Typeface.DEFAULT_BOLD
-//            }else{
-//                val sysTitle = "<font color='#cccccc'>"+roomEntity.name+"</font>"
-//                itemRoomBinding.tvTimeCalName.text = setTextHTML(sysTitle)
-////                itemRoomBinding.tvTimeCalName.setTextColor(Color.parseColor("#FF000000"));
-////                itemRoomBinding.tvTimeCalName.typeface = Typeface.DEFAULT
-//            }
+            itemRoomBinding.tvDateTimeNews.text = DateUtils().convertString(roomEntity!!.dateTime)
         }
 
         init {

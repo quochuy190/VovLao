@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.Configuration
 import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,14 @@ import com.android.player.model.ASong
 import com.android.player.service.OnPlayerServiceCallback
 import com.android.player.service.SongPlayerService
 import com.huynq.vovlao.R
+import com.huynq.vovlao.data.model.Language
+import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.MessageEventBus
 import kotlinx.android.synthetic.main.fragment_replay.view.*
 import org.greenrobot.eventbus.EventBus
+import vn.neo.smsvietlott.common.di.util.ConstantCommon
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback {
@@ -192,5 +198,40 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         private const val ACTION_PLAY_SONG_IN_LIST = 1
         private const val ACTION_PAUSE = 2
         private const val ACTION_STOP = 3
+    }
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        val config = Configuration()
+        applyOverrideConfiguration(config)
+    }
+
+    override fun applyOverrideConfiguration(newConfig: Configuration) {
+        super.applyOverrideConfiguration(updateConfigurationIfSupported(newConfig))
+    }
+
+    open fun updateConfigurationIfSupported(config: Configuration): Configuration? {
+        // Configuration.getLocales is added after 24 and Configuration.locale is deprecated in 24
+        if (Build.VERSION.SDK_INT >= 24) {
+            if (!config.locales.isEmpty) {
+                return config
+            }
+        } else {
+            if (config.locale != null) {
+                return config
+            }
+        }
+        // Please Get your language code from some storage like shared preferences
+        val languageCode = SharedPrefs.instance.get(ConstantCommon.LANGUAGE, Language::class.java).code
+        val locale = Locale(languageCode)
+        if (locale != null) {
+            // Configuration.setLocale is added after 17 and Configuration.locale is deprecated
+            // after 24
+            if (Build.VERSION.SDK_INT >= 17) {
+                config.setLocale(locale)
+            } else {
+                config.locale = locale
+            }
+        }
+        return config
     }
 }

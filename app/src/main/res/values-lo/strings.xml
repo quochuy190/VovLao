@@ -6,20 +6,20 @@
     <string name="exit">Thoát</string>
     <string name="title_notify">Thông báo</string>
     <string name="system_error">Lỗi kết nối, kiểm tra lại mạng và thử lại</string>
-    <string name="title_home">Home</string>
-    <string name="title_newpage">News</string>
-    <string name="title_replay">Replay</string>
-    <string name="title_setup">Setting</string>
-    <string name="btn_next">Next</string>
-    <string name="btn_done">Done</string>
+    <string name="title_home">ຜົ້ງສາລີ</string>
+    <string name="title_newpage">ກົ່ວ</string>
+    <string name="title_replay">ເປີດ ໃໝ່</string>
+    <string name="title_setup">ຕັ້ງ</string>
+    <string name="btn_next">ຕໍ່ໄປ</string>
+    <string name="btn_done">ສຳ ເລັດແລ້ວ</string>
     <string name="notification_channel">APP_Channel_ID</string>
     <string name="lable_epg">LỊCH PHÁT THANH</string>
     <string name="notification_channel_description">Channel ID for APP</string>
     <string name="time_epg_lable">Giờ phát thanh</string>
-    <string name="st_introduct">Introduct</string>
-    <string name="st_language">Language</string>
-    <string name="st_rule">Rule</string>
-    <string name="st_notify">Notifycation</string>
+    <string name="st_introduct">ແນະ ນຳ</string>
+    <string name="st_language">ພາສາ</string>
+    <string name="st_rule">ກົດລະບຽບ</string>
+    <string name="st_notify">ແຈ້ງການ</string>
     <string name="tv_des_news_demo">Tại đây, sau khi xem xét đề nghị của Thủ tướng Lào Thongloun Sisoulith về việc điều chuyển và bổ nhiệm nhân sự chính phủ và dựa theo Luật Quốc hội Lào (sửa đổi năm 2020), trong đó quy định việc điều chuyển thành viên chính phủ là quyền và nhiệm vụ của Ủy ban Thường vụ Quốc hội.
 
 Theo đó, Ủy ban Thường vụ Quốc hội đã xem xét và nhất trí theo đề nghị của Thủ tướng Lào Thongloun Sisoulith, điều chuyển đồng chí Lien Thikeo, Bộ trưởng Nông Lâm Lào nhận nhiệm vụ mới là Bộ trưởng Văn phòng Phủ Thủ tướng; đồng chí Phet Phomphiphack, Bộ trưởng, Chủ nhiệm Văn phòng Phủ Thủ tướng Lào nhận nhiệm vụ mới là Bộ trưởng Nông Lâm; bổ nhiệm đồng chí Khamchen Vongphosi, Phó Ban Tuyên huấn T.Ư nhận nhiệm vụ mới là Bộ trưởng, Chủ nhiệm Văn phòng Phủ Thủ tướng Lào; bổ nhiệm đồng chí Thongchan Manysay, Thứ trưởng Nội vụ nhận nhiệm vụ mới là Bộ trưởng Nội vụ.

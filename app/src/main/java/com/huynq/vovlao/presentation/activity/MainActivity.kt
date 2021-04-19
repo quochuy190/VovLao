@@ -7,6 +7,7 @@ import com.android.player.BaseSongPlayerActivity
 import com.huynq.vovlao.R
 import com.huynq.vovlao.presentation.fragment.main.MainFragment
 import com.huynq.vovlao.presentation.fragment.player.PlayerDetailFragment
+import com.huynq.vovlao.utils.LanguageUtils
 import com.vbeeon.iotdbs.utils.gone
 import com.vbeeon.iotdbs.utils.openFragment
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
@@ -19,8 +20,10 @@ class MainActivity : BaseSongPlayerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        LanguageUtils().loadLocale()
         initEvent()
-        openFragment(MainFragment(), false)
+        val isChangeLanguage = intent.getBooleanExtra(ConstantCommon.KEY_CHANGE_LANGUAGE, false)
+        openFragment(MainFragment.newInstance(isChangeLanguage), false)
     }
     private fun initEvent() {
         cardPlay.setOnSafeClickListener {

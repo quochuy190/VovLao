@@ -1,8 +1,6 @@
 package com.vbeeon.iotdbs.data.remote
 
-import com.huynq.vovlao.data.model.Chanel
-import com.huynq.vovlao.data.model.Epg
-import com.huynq.vovlao.data.model.User
+import com.huynq.vovlao.data.model.*
 import com.huynq.vovlao.data.remote.data.InitRequest
 import com.vbeeon.iotdbs.data.model.ApiResult
 import io.reactivex.rxjava3.core.Single
@@ -33,6 +31,29 @@ interface ApiInterface {
         @Query("languageId") languageid: Int,
         @Query("channelId") channelId: Int
     ): Single<ApiResult<List<Epg>>>
+
+    @GET("/newsCategory?")
+    fun getNewsCategory(
+        @Query("userId") userid: String,
+        @Query("languageId") languageid: Int
+    ): Single<ApiResult<List<NewCategory>>>
+
+    @GET("/newsCategory/listNews?")
+    fun getNewsByCategory(
+        @Query("userId") userid: String,
+        @Query("categoryId") categoryId: Int,
+        @Query("languageId") languageid: Int,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): Single<ApiResult<List<News>>>
+
+    @GET("/newsDetail?")
+    fun getNewsDetail(
+        @Query("userId") userid: String,
+        @Query("languageId") languageid: Int,
+        @Query("newsId") newsId: Int,
+        @Query("newsCategoryId") newsCategoryId: Int
+    ): Single<ApiResult<List<News>>>
 
 
 //    @POST("api/v1/subscriber/login")

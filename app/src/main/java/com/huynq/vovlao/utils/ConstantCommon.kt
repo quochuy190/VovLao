@@ -5,15 +5,15 @@ object ConstantCommon {
     const val PREF_FILE_NAME = "com.vbeeon.iot_dbs"
     const val IS_FIRST_OPEN_APP = "IS_FIRST_OPEN_APP"
     const val KEY_USER_NAME = "KEY_USER_NAME"
-    const val KEY_SEND_SWICH_ID = "KEY_SEND_SWICH_ID"
-    const val KEY_SAVE_LOGIN_USER_LIST_DEVICE = "KEY_SAVE_LOGIN_USER_LIST_DEVICE"
-    const val KEY_SEND_SWICH_NAME = "KEY_SEND_SWICH_NAME"
-    const val KEY_SEND_SWICH_FLOOR = "KEY_SEND_SWICH_FLOOR"
-    const val KEY_SEND_SWICH_TYPE = "KEY_SEND_SWICH_TYPE"
-    const val KEY_INSERT_AUTO_SCRIPT = "KEY_INSERT_AUTO_SCRIPT"
+    const val KEY_CHANGE_LANGUAGE = "KEY_CHANGE_LANGUAGE"
     const val LANGUAGE = "LANGUAGE"
-
-
+    const val DATE_PATTERN_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    const val DATE_PATTERN = "dd-MM-yyyy"
+    const val DATE_PATTERN_WITH_DOT = "dd.MM.yyyy"
+    const val TIME_PATTERN = "HH:mm"
+    const val TIME_PATTERN_AM_PM = "hh:mm a"
+    const val MIN_TIME_MINUTE = 30
+    const val MAX_TIME_MINUTE = 23 * 60
     object Value {
         const val DEFAULT_LANGUAGE_ID = 0
     }

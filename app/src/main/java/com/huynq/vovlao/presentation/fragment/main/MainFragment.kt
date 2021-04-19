@@ -1,19 +1,17 @@
 package com.huynq.vovlao.presentation.fragment.main
 
+import android.content.Context
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.huynq.vovlao.R
 import com.huynq.vovlao.presentation.adapter.MainViewPagerAdapter
-import com.huynq.vovlao.presentation.fragment.DemoFragment
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
+import com.huynq.vovlao.utils.LanguageUtils
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
 import com.vbeeon.iotdbs.utils.gone
-import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 import timber.log.Timber
-import vn.neo.smsvietlott.common.di.util.ConstantCommon
 
 
 @Suppress("DEPRECATION")
@@ -27,6 +25,22 @@ class MainFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
+    companion object {
+        fun newInstance(isChange: Boolean): MainFragment {
+            val fragment = MainFragment()
+            val args = Bundle()
+            args.putBoolean("isChangeLanguage", isChange)
+            fragment.setArguments(args)
+            return fragment
+        }
+    }
+    var isChange = false
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments?.getBoolean("isChangeLanguage")?.let {
+            isChange = it
+        }
+    }
     override fun getLayoutRes(): Int {
         return R.layout.fragment_main
     }
@@ -51,6 +65,13 @@ class MainFragment : BaseFragment() {
         vp_main.adapter = adapter
         vp_main.setOffscreenPageLimit(4)
         vp_main.setPageScrollEnabled(false)
+        if (isChange){
+            tv_toolbar_title.text = getString(R.string.title_setup)
+            vp_main.currentItem = 3
+            bnv.setSelectedItemId(R.id.menu_setting);
+//            val menuItem = bnv.menu.findItem(R.id.menu_setting)
+//            menuItem.setIcon(R.drawable.menu_settings)
+        }
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_radio -> {
@@ -91,7 +112,7 @@ class MainFragment : BaseFragment() {
         mainViewModel.loading.observeForever(this::showProgressDialog)
         mainViewModel.error.observeForever({ throwable ->
             showDialogMessage(context, getString(R.string.system_error))
-           // initViewPager();
+            // initViewPager();
         })
 
     }
@@ -99,6 +120,5 @@ class MainFragment : BaseFragment() {
     override fun observable() {
 
     }
-
 
 }

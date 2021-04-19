@@ -1,12 +1,10 @@
 package com.huynq.vovlao.utils
 
 import android.content.res.Configuration
-import android.content.res.Resources
+import android.util.Log
 import com.huynq.vovlao.R
 import com.huynq.vovlao.VoVApplication
 import com.huynq.vovlao.data.model.Language
-import com.huynq.vovlao.presentation.activity.IntroduceActivity
-import com.vbeeon.iotdbs.utils.launchActivity
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,7 +33,7 @@ class LanguageUtils {
             currentLanguage = Language(
                 ConstantCommon.Value.DEFAULT_LANGUAGE_ID,
                 VoVApplication.instance.getString(R.string.language_english),
-                VoVApplication.instance.getString(R.string.language_english_code), arrImg[0],true
+                VoVApplication.instance.getString(R.string.language_english_code), arrImg[0], true
             )
             SharedPrefs.instance.put(ConstantCommon.LANGUAGE, currentLanguage)
         } else {
@@ -62,9 +60,9 @@ class LanguageUtils {
         val size = languageNames.size
         while (i < size) {
             if (i == getCurrentLanguage()!!.id) {
-                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i],true))
+                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i], true))
             } else
-                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i],false))
+                languageList.add(Language(i, languageNames[i], languageCodes[i], arrImg[i], false))
             i++
         }
         return languageList
@@ -76,17 +74,18 @@ class LanguageUtils {
     fun loadLocale() {
         changeLanguage(initCurrentLanguage())
     }
-
     /**
      * change app language
      */
     fun changeLanguage(language: Language) {
-        SharedPrefs.instance.put(ConstantCommon.LANGUAGE, language)
+        Log.e("TAG", "changeLanguage: " + language.code)
         sCurrentLanguage = language
         val locale = Locale(language.code)
-        val resources: Resources = VoVApplication.instance.getResources()
-        val configuration: Configuration = resources.getConfiguration()
+        //val configuration = VoVApplication.instance.resources.configuration
+        val configuration: Configuration = VoVApplication.instance.getResources().getConfiguration()
+       // val configuration = Configuration()
         configuration.setLocale(locale)
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics())
+        configuration.setLayoutDirection(locale)
     }
+
 }

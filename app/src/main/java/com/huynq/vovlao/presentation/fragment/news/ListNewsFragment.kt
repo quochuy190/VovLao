@@ -2,11 +2,13 @@ package com.huynq.vovlao.presentation.fragment.news
 
 import android.content.Context
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
+import com.huynq.vovlao.data.model.NewCategory
 import com.huynq.vovlao.data.model.News
 import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.NewsAdapter
@@ -25,20 +27,20 @@ class ListNewsFragment : BaseFragment() {
     lateinit var adapterNews: NewsAdapter
 
     companion object {
-        fun newInstance(): ListNewsFragment {
+        fun newInstance(newCate: NewCategory): ListNewsFragment {
             val fragment = ListNewsFragment()
             val args = Bundle()
-            //args.putString("jsonFile", jsonFile)
+            args.putSerializable("newCategory", newCate)
             fragment.setArguments(args)
             return fragment
         }
     }
 
-    var jsonFile: String = "";
+    lateinit var mCategory: NewCategory
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        arguments?.getString("jsonFile")?.let {
-            jsonFile = it
+        arguments?.getSerializable("newCategory")?.let {
+            mCategory = it as NewCategory
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,24 +60,18 @@ class ListNewsFragment : BaseFragment() {
         }!!
         rcvAll.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         rcvAll.apply { adapter = adapterNews }
-        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
-                , getString(R.string.tv_des_news_demo), "20/3/2021"))
-        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
-                , getString(R.string.tv_des_news_demo), "20/3/2021"))
-        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
-                , getString(R.string.tv_des_news_demo), "20/3/2021"))
-        mListNews.add(News(0 , "Kỳ họp hội thứ 10 Quốc hội khóa VII của Lào thông qua nhân sự chính phủ", "",getString(R.string.tv_sort_news_demo)
-                , getString(R.string.tv_des_news_demo), "20/3/2021"))
-
-        adapterNews.setDatas(mListNews)
+        //adapterNews.setDatas(mListNews)
     }
 
     override fun initViewModel() {
         mainViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        mainViewModel.exeGetNews(mCategory)
     }
 
     override fun observable() {
-
+        mainViewModel.loadNews.observe(this, Observer {
+            adapterNews.setDatas(it)
+        })
     }
 
 
