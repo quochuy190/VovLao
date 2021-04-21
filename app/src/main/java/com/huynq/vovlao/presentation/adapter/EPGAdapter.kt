@@ -7,8 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
-import com.huynq.vovlao.data.model.Epg
-import com.huynq.vovlao.data.model.Song
+import com.huynq.vovlao.data.model.Program
 import com.huynq.vovlao.databinding.ItemEpgHomeBinding
 import com.huynq.vovlao.databinding.ItemRadioStreamingBinding
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
@@ -16,12 +15,12 @@ import timber.log.Timber
 
 
 class EPGAdapter internal constructor(var context: Context, val doneClick: (Int) -> Unit) : RecyclerView.Adapter<EPGAdapter.ViewHolder>() {
-    private var listScript = emptyList<Epg>() // Cached copy of words
+    private var listScript = emptyList<Program>() // Cached copy of words
 
     inner class ViewHolder(itemBinding: ItemEpgHomeBinding) : RecyclerView.ViewHolder(itemBinding.getRoot()) {
         var itemRoomBinding: ItemEpgHomeBinding
 
-        fun bind(roomEntity: Epg?) {
+        fun bind(roomEntity: Program?) {
             itemRoomBinding.data = roomEntity
             itemRoomBinding.executePendingBindings()
             Glide.with(context).load(roomEntity!!.programImage).placeholder(R.color.gray).into(itemRoomBinding.imgCoverEpg)
@@ -50,7 +49,7 @@ class EPGAdapter internal constructor(var context: Context, val doneClick: (Int)
 
     }
 
-    internal fun setDatas(list: List<Epg>) {
+    internal fun setDatas(list: List<Program>) {
         this.listScript = list
         notifyDataSetChanged()
     }

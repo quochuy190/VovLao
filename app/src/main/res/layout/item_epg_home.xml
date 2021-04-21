@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.huynq.vovlao.data.model.Epg" />
+            type="com.huynq.vovlao.data.model.Program" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

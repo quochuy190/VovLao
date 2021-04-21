@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.huynq.vovlao.data.model.Song" />
+            type="com.huynq.vovlao.data.model.Program" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="2"
-            android:text="@{data.songName}"
+            android:text="@{data.title}"
             android:textColor="@color/appBar"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold"
@@ -40,7 +40,7 @@
             android:layout_margin="@dimen/dimen_10dp"
             android:id="@+id/imgProgram"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_cover_news"
+
             android:layout_marginTop="@dimen/dimen_5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="16:9"
@@ -68,7 +68,7 @@
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="3"
-            android:text="@{data.duration}"
+            android:text="@{data.description}"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="1"
-            android:text="@{data.duration}"
+
             android:textColor="@color/black"
             android:textSize="@dimen/sp_15"
             app:layout_constraintEnd_toEndOf="parent"

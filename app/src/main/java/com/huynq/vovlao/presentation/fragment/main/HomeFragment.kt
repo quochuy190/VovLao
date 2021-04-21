@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
 import com.huynq.vovlao.R
-import com.huynq.vovlao.data.model.Epg
+import com.huynq.vovlao.data.model.Program
 import com.huynq.vovlao.data.model.Song
-import com.huynq.vovlao.data.model.User
 import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.EPGAdapter
 import com.huynq.vovlao.presentation.adapter.ImagesAdapter
@@ -35,7 +33,7 @@ import timber.log.Timber
 @Suppress("DEPRECATION")
 class HomeFragment : BaseFragment() {
     val mSongList: MutableList<Song> = ArrayList()
-    val mEpgList: MutableList<Epg> = ArrayList()
+    val mEpgList: MutableList<Program> = ArrayList()
     lateinit var mainViewModel: MainViewModel
     lateinit var homeViewModel: HomeViewModel
     lateinit var radioAdapter: RadioStreaminAdapter

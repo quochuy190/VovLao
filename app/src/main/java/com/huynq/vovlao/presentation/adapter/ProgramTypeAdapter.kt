@@ -7,28 +7,31 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
-import com.huynq.vovlao.data.model.Song
+import com.huynq.vovlao.data.model.ProgramType
 import com.huynq.vovlao.databinding.ItemChannelRadioBinding
-import com.huynq.vovlao.databinding.ItemRadioStreamingBinding
+import com.vbeeon.iotdbs.utils.gone
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
+import com.vbeeon.iotdbs.utils.visible
 import timber.log.Timber
 
 
-class ChannelRadioAdapter internal constructor(
-    var context: Context,
-    val doneClick: (Int) -> Unit
-) : RecyclerView.Adapter<ChannelRadioAdapter
-.ViewHolder>() {
-    private var listScript = emptyList<Song>() // Cached copy of words
-
+class ProgramTypeAdapter internal constructor(var context: Context, val doneClick: (ProgramType) -> Unit) :
+    RecyclerView.Adapter<ProgramTypeAdapter.ViewHolder>() {
+    private var listScript = emptyList<ProgramType>() // Cached copy of words
     inner class ViewHolder(itemBinding: ItemChannelRadioBinding) :
         RecyclerView.ViewHolder(itemBinding.getRoot()) {
         var itemRoomBinding: ItemChannelRadioBinding
 
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-        fun bind(roomEntity: Song?) {
+        fun bind(roomEntity: ProgramType?) {
             itemRoomBinding.data = roomEntity
+            if (roomEntity!!.isSelected){
+                itemRoomBinding.viewSelected.visible()
+            }else
+                itemRoomBinding.viewSelected.gone()
+            Glide.with(context).load(roomEntity?.typeImage).placeholder(R.color.gray).into(itemRoomBinding.imgBGChannel)
             itemRoomBinding.executePendingBindings()
         }
 
@@ -59,13 +62,13 @@ class ChannelRadioAdapter internal constructor(
                     listScript[i].isSelected = false
                 }
             }
-            doneClick(position)
+            doneClick(listScript[position])
             notifyDataSetChanged()
         }
 
     }
 
-    internal fun setDatas(list: List<Song>) {
+    internal fun setDatas(list: List<ProgramType>) {
         this.listScript = list
         notifyDataSetChanged()
     }

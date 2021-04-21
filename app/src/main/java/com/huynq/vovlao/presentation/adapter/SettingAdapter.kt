@@ -8,10 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.huynq.vovlao.R
-import com.huynq.vovlao.data.model.Epg
-import com.huynq.vovlao.data.model.News
 import com.huynq.vovlao.data.model.Setting
-import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.databinding.ItemEpgHomeBinding
 import com.huynq.vovlao.databinding.ItemNewsBinding
 import com.huynq.vovlao.databinding.ItemRadioStreamingBinding

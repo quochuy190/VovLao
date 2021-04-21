@@ -25,7 +25,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitleReplay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="@dimen/dimen_7dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
@@ -33,9 +32,9 @@
         android:id="@+id/rcvListProgramReplay"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dimen_10dp"
+        android:layout_marginStart="@dimen/dimen_7dp"
         android:layout_marginTop="@dimen/dimen_10dp"
-        android:layout_marginEnd="@dimen/dimen_10dp"
+        android:layout_marginEnd="@dimen/dimen_7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

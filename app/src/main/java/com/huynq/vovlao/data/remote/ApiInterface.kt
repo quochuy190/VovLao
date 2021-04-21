@@ -30,7 +30,7 @@ interface ApiInterface {
         @Query("userId") userid: String,
         @Query("languageId") languageid: Int,
         @Query("channelId") channelId: Int
-    ): Single<ApiResult<List<Epg>>>
+    ): Single<ApiResult<List<Program>>>
 
     @GET("/newsCategory?")
     fun getNewsCategory(
@@ -54,6 +54,19 @@ interface ApiInterface {
         @Query("newsId") newsId: Int,
         @Query("newsCategoryId") newsCategoryId: Int
     ): Single<ApiResult<List<News>>>
+
+    @GET("/programType?")
+    fun getProgramType(
+        @Query("userId") userid: String,
+        @Query("languageId") languageid: Int
+    ): Single<ApiResult<List<ProgramType>>>
+
+    @GET("/program/listProgramType?")
+    fun getlistProgramType(
+        @Query("userId") userid: String,
+        @Query("programTypeId") programTypeId: Int,
+        @Query("languageId") languageid: Int
+    ): Single<ApiResult<List<Program>>>
 
 
 //    @POST("api/v1/subscriber/login")
