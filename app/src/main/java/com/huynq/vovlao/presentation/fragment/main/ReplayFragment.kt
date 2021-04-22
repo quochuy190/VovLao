@@ -117,9 +117,31 @@ class ReplayFragment : BaseFragment() {
             mASongList!!.clear()
             mListSong.clear()
             mListProgram.addAll(it)
-            for (program in mListProgram){
-                mListSong.add(Song(program.id, program.title, program.programLink, program.typeName, "", ""+program.duration, 3, false))
-                mASongList!!.add(Song(program.id, program.title, program.programLink, program.typeName, "", ""+program.duration, 3, false))
+            for (program in mListProgram) {
+                mListSong.add(
+                    Song(
+                        program.id,
+                        program.title,
+                        program.programLink,
+                        program.typeName,
+                        program.programImage,
+                        "" + program.duration,
+                        3,
+                        false
+                    )
+                )
+                mASongList!!.add(
+                    Song(
+                        program.id,
+                        program.title,
+                        program.programLink,
+                        program.typeName,
+                        program.programImage,
+                        "" + program.duration,
+                        3,
+                        false
+                    )
+                )
             }
             adapterProgram.setDatas(mListProgram)
         })

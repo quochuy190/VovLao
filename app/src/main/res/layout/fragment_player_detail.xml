@@ -5,6 +5,33 @@
     android:background="@color/white"
     android:id="@+id/llDetailPlay"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/toolbar_main"/>
+    <ImageView
+        android:id="@+id/imgSong"
+        app:layout_constraintTop_toBottomOf="@+id/appBarMain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="2.2:1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tvProgram"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:duplicateParentState="true"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="2"
+        android:layout_marginTop="@dimen/dimen_7dp"
+        android:text="@{data.title}"
+        android:textColor="@color/appBar"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSong" />
 
     <SeekBar
         android:id="@+id/sekbarPlayDetail"

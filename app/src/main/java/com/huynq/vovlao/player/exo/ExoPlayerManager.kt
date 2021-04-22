@@ -189,6 +189,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             // {@code onPlayerStateChanged} callback when the stream is ready to play.
             mExoPlayer?.prepare(mediaSource)
             EventBus.getDefault().post(MessageEventBus(0, "", null))
+            EventBus.getDefault().post(MessageEventBus(3, "", aSong))
             // If we are streaming from the internet, we want to hold a
             // Wifi lock, which prevents the Wifi radio from going to
             // sleep while the song is playing.
@@ -325,6 +326,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
 
         override fun onLoadingChanged(isLoading: Boolean) {
             // Nothing to do.
+           // EventBus.getDefault().post(MessageEventBus(0, "", null))
         }
 
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -332,16 +334,20 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
                 Player.STATE_IDLE, Player.STATE_BUFFERING, Player.STATE_READY -> {
                     setCurrentSongState()
                     mUpdateProgressHandler.sendEmptyMessage(0)
+                   // EventBus.getDefault().post(MessageEventBus(1, "", null))
                 }
                 Player.STATE_ENDED -> {
                     // The media player finished playing the current song.
                     mUpdateProgressHandler.removeMessages(0)
                     mExoSongStateCallback?.onCompletion()
+                    EventBus.getDefault().post(MessageEventBus(1, "", null))
+                    Log.e(TAG, "onPlayerError: STATE_ENDED")
                 }
             }
         }
 
         override fun onPlayerError(error: ExoPlaybackException) {
+
             val what: String = when (error.type) {
                 ExoPlaybackException.TYPE_SOURCE -> error.sourceException.message ?: ""
                 ExoPlaybackException.TYPE_RENDERER -> error.rendererException.message ?: ""
@@ -349,6 +355,8 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
                 else -> "onPlayerError: $error"
             }
             Log.e(TAG, "onPlayerError: $what")
+            EventBus.getDefault().post(MessageEventBus(1, "", null))
+            EventBus.getDefault().post(MessageEventBus(2, "", null))
         }
 
         override fun onPositionDiscontinuity(reason: Int) {

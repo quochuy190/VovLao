@@ -8,15 +8,20 @@ import androidx.lifecycle.ViewModelProviders
 import coil.request.CachePolicy
 import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
+import com.bumptech.glide.Glide
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Song
 import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
+import com.vbeeon.iotdbs.data.model.MessageEventBus
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import kotlinx.android.synthetic.main.fragment_demo.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_player_detail.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.io.File
 
@@ -26,21 +31,52 @@ class PlayerDetailFragment : BaseFragment() {
     val songPlayerViewModel: SongPlayerViewModel = SongPlayerViewModel.getPlayerViewModelInstance()
     lateinit var mainViewModel: MainViewModel
     companion object {
-        fun newInstance(): PlayerDetailFragment {
+        fun newInstance(song: ASong): PlayerDetailFragment {
             val fragment = PlayerDetailFragment()
             val args = Bundle()
-            //args.putString("jsonFile", jsonFile)
+            args.putParcelable("song", song)
             fragment.setArguments(args)
             return fragment
         }
     }
 
-    lateinit var songS: Song
+    lateinit var songS: ASong
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        arguments?.getParcelable<Song>("jsonFile")?.let {
+        arguments?.getParcelable<Song>("song")?.let {
             songS = it
         }
+    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEventBus?) {
+        if (event!=null){
+            when(event.style){
+                0 -> {
+                    showProgress()
+                }
+                1 -> {
+                    dismissProgress()
+                }
+                2 -> {
+                    showDialogMessage(activity,"Loading error!")
+                }
+                3 -> {
+                    Timber.e(""+songS)
+                    songS = event.data!!
+                    showInfoSong()
+                }
+            }
+
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +88,7 @@ class PlayerDetailFragment : BaseFragment() {
     }
 
     override fun initView() {
+        showInfoSong()
         llDetailPlay.setOnSafeClickListener {
 
         }
@@ -60,13 +97,17 @@ class PlayerDetailFragment : BaseFragment() {
         }
     }
 
+    private fun showInfoSong() {
+        context?.let { Glide.with(it).load(songS.clipArt).into(imgSong) }
+        tvProgram.text = songS.title
+    }
+
     override fun initViewModel() {
 
     }
 
     override fun observable() {
         with(songPlayerViewModel) {
-
             songDurationData.observe(this@PlayerDetailFragment, Observer {
                 Timber.e(""+it)
                 sekbarPlayDetail.max = it

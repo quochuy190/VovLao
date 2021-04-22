@@ -157,6 +157,10 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
         songPlayerViewModel.updateSong(song)
     }
 
+    fun currentSong() : ASong? {
+        return mSong
+    }
+
     override fun setPlayStatus(isPlay: Boolean) {
         if (isPlay)
             EventBus.getDefault().post(MessageEventBus(1, "", null))
@@ -193,6 +197,7 @@ open class BaseSongPlayerActivity : AppCompatActivity(), OnPlayerServiceCallback
     override fun onDestroy() {
         stopService()
         super.onDestroy()
+
     }
 
 

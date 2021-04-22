@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android.player.model.ASong
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 @Entity(tableName = "song")
 @Parcelize

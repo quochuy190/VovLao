@@ -81,6 +81,9 @@ class HomeFragment : BaseFragment() {
                 1 -> {
                     dismissProgress()
                 }
+                2 -> {
+                    showDialogMessage(activity,"Loading error!")
+                }
             }
 
         }
