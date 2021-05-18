@@ -1,9 +1,13 @@
 package com.huynq.vovlao.presentation.viewmodel
 
+import android.os.Build
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.huynq.vovlao.BuildConfig
 import com.huynq.vovlao.data.model.*
+import com.huynq.vovlao.data.remote.data.InitRequest
+import com.huynq.vovlao.data.remote.data.UpdateUserRequest
 import com.huynq.vovlao.data.repository.SongRepository
 import com.huynq.vovlao.utils.LanguageUtils
 import com.huynq.vovlao.utils.SharedPrefs
@@ -77,6 +81,35 @@ class HomeViewModel : BaseViewModel() {
                     error.postValue(t2)
                 }
              }
+    }
+
+    fun exeUpdateUser() {
+        var mUser = SharedPrefs.instance.get(ConstantCommon.KEY_USER_NAME, User::class.java)
+        var codeLan = LanguageUtils().getCurrentLanguage()!!.code
+        var tokenFireBase = SharedPrefs.instance.get(ConstantCommon.KEY_TOKEN_FIREBASE, String::class.java)
+        val request = UpdateUserRequest(mUser.userId, 2, ""+ Build.VERSION.SDK_INT, tokenFireBase, ""+ BuildConfig.VERSION_NAME,""+codeLan);
+        apiClient.apiUpdateUser(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loading.postValue(true) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                loading.postValue(false)
+                error.postValue(it)
+            }
+            .subscribe { t1: ApiResult<List<User>>?, t2: Throwable? ->
+                loading.postValue(false)
+                if (t1!=null){
+                    if (t1!!.errorCode ==200){
+                        // LanguageUtils().loadLocale()
+                        SharedPrefs.instance.put(ConstantCommon.KEY_USER_NAME, t1.data?.get(0))
+                       // loadInit.postValue(true)
+                    }
+                }else{
+                    error.postValue(t2)
+                }
+
+            }
     }
 
     fun exeApiProgram(idChannel: Int) {

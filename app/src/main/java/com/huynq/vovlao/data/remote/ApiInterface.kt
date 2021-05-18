@@ -2,6 +2,7 @@ package com.vbeeon.iotdbs.data.remote
 
 import com.huynq.vovlao.data.model.*
 import com.huynq.vovlao.data.remote.data.InitRequest
+import com.huynq.vovlao.data.remote.data.UpdateUserRequest
 import com.vbeeon.iotdbs.data.model.ApiResult
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
@@ -18,6 +19,9 @@ interface ApiInterface {
 
     @POST("/users")
     fun apiInit(@Body userDto: InitRequest): Single<ApiResult<List<User>>>
+
+    @PUT("/users")
+    fun apiUpdateUser(@Body userDto: UpdateUserRequest): Single<ApiResult<List<User>>>
 
     @GET("/channel?")
     fun getChannels(

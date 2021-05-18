@@ -6,6 +6,7 @@ object ConstantCommon {
     const val IS_FIRST_OPEN_APP = "IS_FIRST_OPEN_APP"
     const val KEY_USER_NAME = "KEY_USER_NAME"
     const val KEY_CHANGE_LANGUAGE = "KEY_CHANGE_LANGUAGE"
+    const val KEY_TOKEN_FIREBASE = "KEY_TOKEN_FIREBASE"
     const val LANGUAGE = "LANGUAGE"
     const val DATE_PATTERN_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val DATE_PATTERN = "dd-MM-yyyy"

@@ -50,7 +50,8 @@ class IntroduceViewModel : BaseViewModel() {
     }
 
     fun exeApi( uuid: String, lanCode: Int) {
-        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, "test", ""+ BuildConfig.VERSION_NAME,""+lanCode);
+        var tokenFireBase = SharedPrefs.instance.get(ConstantCommon.KEY_TOKEN_FIREBASE, String::class.java)
+        val request = InitRequest(uuid, 2, ""+Build.VERSION.SDK_INT, tokenFireBase, ""+ BuildConfig.VERSION_NAME,""+lanCode);
         apiClient.apiInit(request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

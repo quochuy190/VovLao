@@ -15,13 +15,14 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.huynq.vovlao.R
+import timber.log.Timber
 
 // File MessageServiceFirebase
 // @project OfficeApp
 // @author minhhoang on 23-04-2021
 class MessageServiceFirebase : FirebaseMessagingService() {
-    private val ID_CHANNEL = "Technopark"
-    private val CHANNEL_NAME = "Technopark"
+    private val ID_CHANNEL = "VovLao"
+    private val CHANNEL_NAME = "VovLao"
 
 
     override fun onNewToken(p0: String) {
@@ -32,6 +33,7 @@ class MessageServiceFirebase : FirebaseMessagingService() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val data = remoteMessage.data
+        Timber.e(""+data)
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val builder = setNotificationBuilder(this, manager)
 

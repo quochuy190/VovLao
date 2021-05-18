@@ -25,6 +25,7 @@ import com.huynq.vovlao.presentation.viewmodel.IntroduceViewModel
 import com.huynq.vovlao.utils.LanguageUtils
 import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
+import com.vbeeon.iotdbs.utils.getUUID
 import com.vbeeon.iotdbs.utils.launchActivity
 import com.vbeeon.iotdbs.utils.openFragment
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
@@ -80,9 +81,7 @@ class IntroduceFragment : BaseFragment() {
 
             // Get new FCM registration token
             val token = task.result
-
-            // Log and toast
-           Timber.e("token= "+task.result)
+            SharedPrefs.instance.put(ConstantCommon.KEY_TOKEN_FIREBASE, token)
         })
         adapterNews = context?.let {
             LanguageAdapter(it, doneClick = {
@@ -107,7 +106,7 @@ class IntroduceFragment : BaseFragment() {
 
     private fun getApiInit(codeLanguage: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getUUID()?.let { mainViewModel.exeApi(it, codeLanguage) }
+            context?.let { getUUID(it)?.let { mainViewModel.exeApi(it, codeLanguage) } }
         }
     }
 
@@ -135,15 +134,6 @@ class IntroduceFragment : BaseFragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("MissingPermission")
-    fun getUUID(): String? {
-        var deviceId = ""
-        deviceId = Settings.Secure.getString(
-            getContext()?.getContentResolver(),
-            Settings.Secure.ANDROID_ID
-        )
-        return deviceId.toString()
-    }
+
 
 }

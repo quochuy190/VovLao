@@ -1,5 +1,6 @@
 package com.vbeeon.iotdbs.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -7,10 +8,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Html
 import android.text.Spanned
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -150,4 +153,15 @@ fun <T> Observable<T>.observerOnDatabase(block: (T) -> Unit): Observable<T> {
     return this.observeOn(Schedulers.computation())
         .doOnNext(block)
         .observeOn(Schedulers.io())
+}
+
+@RequiresApi(Build.VERSION_CODES.M)
+@SuppressLint("MissingPermission")
+fun getUUID(context: Context): String? {
+    var deviceId = ""
+    deviceId = Settings.Secure.getString(
+        context?.getContentResolver(),
+        Settings.Secure.ANDROID_ID
+    )
+    return deviceId.toString()
 }

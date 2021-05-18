@@ -3,6 +3,7 @@ package com.huynq.vovlao.presentation.fragment.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Program
 import com.huynq.vovlao.data.model.Song
@@ -19,8 +22,10 @@ import com.huynq.vovlao.presentation.adapter.ImagesAdapter
 import com.huynq.vovlao.presentation.adapter.RadioStreaminAdapter
 import com.huynq.vovlao.presentation.viewmodel.HomeViewModel
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
+import com.huynq.vovlao.utils.SharedPrefs
 import com.vbeeon.iotdbs.data.model.MessageEventBus
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
+import com.vbeeon.iotdbs.utils.getUUID
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.greenrobot.eventbus.EventBus
@@ -28,6 +33,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 import timber.log.Timber
+import vn.neo.smsvietlott.common.di.util.ConstantCommon
 
 
 @Suppress("DEPRECATION")
@@ -163,7 +169,17 @@ class HomeFragment : BaseFragment() {
             showDialogMessage(context, getString(R.string.system_error))
             // initViewPager();
         })
-        //homeViewModel.insert(mSongList)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.e("Fetching FCM registration token failed: "+ task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            SharedPrefs.instance.put(ConstantCommon.KEY_TOKEN_FIREBASE, token)
+            homeViewModel.exeUpdateUser()
+        })
         homeViewModel.loadAllUser(this)
         homeViewModel.exeApiGetChannel()
     }
