@@ -1,27 +1,23 @@
 package com.huynq.vovlao.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.android.player.BaseSongPlayerActivity
-import com.android.player.exo.OnExoPlayerManagerCallback
-import com.android.player.model.ASong
 import com.huynq.vovlao.R
 import com.huynq.vovlao.presentation.fragment.main.MainFragment
 import com.huynq.vovlao.presentation.fragment.player.PlayerDetailFragment
 import com.huynq.vovlao.utils.LanguageUtils
-import com.vbeeon.iotdbs.data.model.MessageEventBus
 import com.vbeeon.iotdbs.utils.gone
 import com.vbeeon.iotdbs.utils.openFragment
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import com.vbeeon.iotdbs.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
-import java.util.ArrayList
+
 
 class MainActivity : BaseSongPlayerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,17 +73,32 @@ class MainActivity : BaseSongPlayerActivity() {
 
             isPlayData.observe(this@MainActivity, Observer {
                // song_player_toggle_image_view.setImageResource(if (it) R.drawable.ic_pause else R.drawable.exo_icon_play)
-                if (it){
-                    cardPlay.visible()
-                }else
-                    cardPlay.gone()
-
+//                if (currentSong()!=null&&currentSong()!!.songType==2){
+//                    val fragmentManager: FragmentManager = supportFragmentManager
+//                    val f: Fragment =
+//                        fragmentManager.findFragmentById(R.id.frameLayout)!!
+//                    if (f == PlayerDetailFragment()) {
+//                        cardPlay.gone()
+//                    }else{
+//                        if (it){
+//                            cardPlay.visible()
+//                        }else
+//                            cardPlay.gone()
+//                    }
+//
+//                }
             })
 
             playerData.observe(this@MainActivity, Observer {
                 //loadInitialData(it)
             })
         }
+    }
+    fun isShowCardPlay(boolean: Boolean){
+        if (boolean){
+            cardPlay.visible()
+        }else
+            cardPlay.gone()
     }
 
 

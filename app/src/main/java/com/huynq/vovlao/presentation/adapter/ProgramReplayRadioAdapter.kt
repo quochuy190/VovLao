@@ -12,6 +12,7 @@ import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Program
 import com.huynq.vovlao.databinding.ItemProgramReplayBinding
 import com.vbeeon.iotdbs.utils.setOnSafeClickListener
+import kotlinx.android.synthetic.main.fragment_player_detail.*
 import timber.log.Timber
 
 
@@ -30,6 +31,9 @@ class ProgramReplayRadioAdapter internal constructor(
         fun bind(roomEntity: Program?) {
             itemRoomBinding.data = roomEntity
             Glide.with(context).load(roomEntity?.programImage).placeholder(R.color.gray).into(itemRoomBinding.imgProgram)
+            if (roomEntity != null) {
+                itemRoomBinding.icPlayProgram.setImageResource(if (roomEntity.isSelected) R.drawable.ic_play else R.drawable.ic_pause)
+            }
             itemRoomBinding.executePendingBindings()
         }
 

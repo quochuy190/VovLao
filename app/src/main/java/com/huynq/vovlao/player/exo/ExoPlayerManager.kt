@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.vbeeon.iotdbs.data.model.MessageEventBus
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 
 /**
  * This class is responsible for managing the player(actions, state, ...) using [ExoPlayer]
@@ -145,6 +146,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
         tryToGetAudioFocus()
         registerAudioNoisyReceiver()
         val songHasChanged = aSong.songId != mCurrentSong?.songId
+        Timber.e("link= "+aSong.source)
         if (songHasChanged) mCurrentSong = aSong
         if (songHasChanged || mExoPlayer == null) {
             releaseResources(false) // release everything except the player
@@ -181,6 +183,9 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
                 C.TYPE_OTHER ->
                     ExtractorMediaSource.Factory(dataSourceFactory)
                             .createMediaSource(Uri.parse(source))
+                C.CONTENT_TYPE_MUSIC ->
+                    ExtractorMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(Uri.parse(source))
                 else ->
                     HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(source))
             }
@@ -188,6 +193,7 @@ class ExoPlayerManager(val context: Context) : OnExoPlayerManagerCallback {
             // Prepares media to play (happens on background thread) and triggers
             // {@code onPlayerStateChanged} callback when the stream is ready to play.
             mExoPlayer?.prepare(mediaSource)
+
             EventBus.getDefault().post(MessageEventBus(0, "", null))
             EventBus.getDefault().post(MessageEventBus(3, "", aSong))
             // If we are streaming from the internet, we want to hold a

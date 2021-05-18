@@ -120,8 +120,8 @@ constructor(private val mService: SongPlayerService) : BroadcastReceiver() {
     fun generateNotification(): Notification? {
         if (notificationBuilder == null) {
             notificationBuilder = NotificationCompat.Builder(mService, CHANNEL_ID)
-            notificationBuilder?.setSmallIcon(R.drawable.itunes)
-                ?.setLargeIcon(BitmapFactory.decodeResource(mService.resources, R.drawable.itunes))
+            notificationBuilder?.setSmallIcon(R.drawable.menu_radio)
+                ?.setLargeIcon(BitmapFactory.decodeResource(mService.resources, R.drawable.menu_radio))
                 ?.setContentTitle(mService.getString(R.string.app_name))
                 ?.setContentText(mService.getString(R.string.app_name))
                 ?.setDeleteIntent(mStopIntent)

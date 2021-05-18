@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SnapHelper
+import com.android.player.SongPlayerViewModel
 import com.android.player.model.ASong
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Program
@@ -17,6 +18,7 @@ import com.huynq.vovlao.presentation.adapter.ProgramTypeAdapter
 import com.huynq.vovlao.presentation.viewmodel.ReplayViewModel
 import com.huynq.vovlao.widget.StartSnapHelper
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_replay.*
 
 
@@ -29,7 +31,7 @@ class ReplayFragment : BaseFragment() {
     val mListProgram: MutableList<Program> = ArrayList()
     lateinit var adapterProgram: ProgramReplayRadioAdapter
     lateinit var replayViewModel: ReplayViewModel
-
+    val songPlayerViewModel: SongPlayerViewModel = SongPlayerViewModel.getPlayerViewModelInstance()
     companion object {
         fun newInstance(): ReplayFragment {
             val fragment = ReplayFragment()
@@ -77,6 +79,7 @@ class ReplayFragment : BaseFragment() {
             ProgramReplayRadioAdapter(it, doneClick = {
                 val song = mListSong[it]
                 (context as MainActivity).play(mASongList, song)
+                (context as MainActivity).isShowCardPlay(true)
             })
         }!!
         var layoutManagerProgram =
@@ -126,7 +129,7 @@ class ReplayFragment : BaseFragment() {
                         program.typeName,
                         program.programImage,
                         "" + program.duration,
-                        3,
+                        2,
                         false
                     )
                 )
@@ -138,13 +141,70 @@ class ReplayFragment : BaseFragment() {
                         program.typeName,
                         program.programImage,
                         "" + program.duration,
-                        3,
+                        2,
                         false
                     )
                 )
             }
             adapterProgram.setDatas(mListProgram)
         })
+
+        with(songPlayerViewModel) {
+
+//            songDurationData.observe(this@HomeFragment, Observer {
+//                song_player_progress_seek_bar.max = it
+//            })
+//
+//            songPositionTextData.observe(this@HomeFragment,
+//                Observer { t -> song_player_passed_time_text_view.text = t })
+//
+//            songPositionData.observe(this@HomeFragment, Observer {
+//                song_player_progress_seek_bar.progress = it
+//            })
+//
+//            isRepeatData.observe(this@HomeFragment, Observer {
+//                song_player_repeat_image_view.setImageResource(
+//                    if (it) R.drawable.ic_repeat_one_color_primary_vector
+//                    else R.drawable.ic_repeat_one_black_vector
+//                )
+//            })
+//
+//            isShuffleData.observe(this@HomeFragment, Observer {
+//                song_player_shuffle_image_view.setImageResource(
+//                    if (it) R.drawable.ic_shuffle_color_primary_vector
+//                    else R.drawable.ic_shuffle_black_vector
+//                )
+//            })
+
+            isPlayData.observe(this@ReplayFragment, Observer {
+               // icPlay.setImageResource(if (it) com.huynq.vovlao.R.drawable.ic_play else com.huynq.vovlao.R.drawable.ic_pause)
+                if (!it){
+                    for (program in mListProgram) {
+                        program.isSelected = false
+                    }
+                    adapterProgram.setDatas(mListProgram)
+                }
+            })
+
+            playerData.observe(this@ReplayFragment, Observer {
+                loadInitialData(it)
+            })
+        }
+    }
+
+    private fun loadInitialData(it: ASong?) {
+        if (mListProgram.size==0)
+            return
+        for (program in mListProgram) {
+            if (it != null) {
+                if (program.id == it.songId){
+                    program.isSelected = true
+                }else
+                    program.isSelected = false
+            }else
+                program.isSelected = false
+        }
+        adapterProgram.setDatas(mListProgram)
     }
 
 

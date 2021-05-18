@@ -13,11 +13,13 @@ import com.huynq.vovlao.presentation.activity.IntroduceActivity
 import com.huynq.vovlao.presentation.activity.MainActivity
 import com.huynq.vovlao.presentation.adapter.NewsAdapter
 import com.huynq.vovlao.presentation.adapter.SettingAdapter
+import com.huynq.vovlao.presentation.fragment.notify.NotifyFragment
 import com.huynq.vovlao.presentation.viewmodel.MainViewModel
 import com.huynq.vovlao.presentation.viewmodel.NewsViewModel
 import com.vbeeon.iotdbs.presentation.base.BaseFragment
 import com.vbeeon.iotdbs.utils.launchActivity
 import com.vbeeon.iotdbs.utils.launchActivityForResult
+import com.vbeeon.iotdbs.utils.openFragment
 import kotlinx.android.synthetic.main.fragment_demo.*
 import kotlinx.android.synthetic.main.fragment_recycleview.*
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
@@ -83,6 +85,7 @@ class SettingFragment : BaseFragment() {
             2 -> {
             }
             3 -> {
+                (activity as MainActivity).openFragment(NotifyFragment(), true)
             }
         }
     }

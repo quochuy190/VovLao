@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1047956248044",
+    "project_id": "vovlao",
+    "storage_bucket": "vovlao.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047956248044:android:5103f8098b2085811e5cc9",
+        "android_client_info": {
+          "package_name": "com.huynq.vovlao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047956248044-js07jrs40cd596s58h598thn3ohomao5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7vviz2Y8_DLhLOwb5SyiCqWzVIaJMbLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047956248044-js07jrs40cd596s58h598thn3ohomao5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

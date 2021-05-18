@@ -1,6 +1,7 @@
 package com.huynq.vovlao.presentation.fragment.player
 
 import android.content.Context
+import android.media.AudioManager
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
@@ -30,6 +31,7 @@ import java.io.File
 class PlayerDetailFragment : BaseFragment() {
     val songPlayerViewModel: SongPlayerViewModel = SongPlayerViewModel.getPlayerViewModelInstance()
     lateinit var mainViewModel: MainViewModel
+    private var isMute = false
     companion object {
         fun newInstance(song: ASong): PlayerDetailFragment {
             val fragment = PlayerDetailFragment()
@@ -95,11 +97,31 @@ class PlayerDetailFragment : BaseFragment() {
         icPlayerDetail.setOnSafeClickListener {
             (context as MainActivity).toggle()
         }
+        icNext.setOnSafeClickListener {
+            (context as MainActivity).next()
+        }
+        icPre.setOnSafeClickListener {
+            (context as MainActivity).previous()
+        }
+        icMuteDetail.setOnSafeClickListener {
+            val audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            if (isMute) {
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                isMute = false;
+                icMute.setImageDrawable(resources.getDrawable(R.drawable.ic_unmute))
+            } else {
+                icMute.setImageDrawable(resources.getDrawable(R.drawable.ic_mute))
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                isMute = true;
+            }
+        }
     }
 
     private fun showInfoSong() {
+        (context as MainActivity).isShowCardPlay(false)
         context?.let { Glide.with(it).load(songS.clipArt).into(imgSong) }
         tvProgram.text = songS.title
+
     }
 
     override fun initViewModel() {
@@ -120,16 +142,16 @@ class PlayerDetailFragment : BaseFragment() {
                 sekbarPlayDetail.progress = it
                 Timber.e(""+it)
             })
-//
-//            isRepeatData.observe(this@HomeFragment, Observer {
-//                song_player_repeat_image_view.setImageResource(
+
+//            isRepeatData.observe(this@PlayerDetailFragment, Observer {
+//                icRepeat.setImageResource(
 //                    if (it) R.drawable.ic_repeat_one_color_primary_vector
 //                    else R.drawable.ic_repeat_one_black_vector
 //                )
 //            })
 //
-//            isShuffleData.observe(this@HomeFragment, Observer {
-//                song_player_shuffle_image_view.setImageResource(
+//            isShuffleData.observe(this@PlayerDetailFragment, Observer {
+//                icRepeat.setImageResource(
 //                    if (it) R.drawable.ic_shuffle_color_primary_vector
 //                    else R.drawable.ic_shuffle_black_vector
 //                )
@@ -142,6 +164,7 @@ class PlayerDetailFragment : BaseFragment() {
             playerData.observe(this@PlayerDetailFragment, Observer {
                 loadInitialData(it)
             })
+
         }
     }
 
@@ -156,5 +179,10 @@ class PlayerDetailFragment : BaseFragment() {
 //                CachePolicy.ENABLED
 //            }
 //        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (context as MainActivity).isShowCardPlay(true)
     }
 }

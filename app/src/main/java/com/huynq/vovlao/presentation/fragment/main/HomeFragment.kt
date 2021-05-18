@@ -102,26 +102,6 @@ class HomeFragment : BaseFragment() {
         }!!
         rcvRadioStreaming.layoutManager =LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         rcvRadioStreaming.apply { adapter = radioAdapter }
-        val song = Song(0, "VOV1", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3", "artist",
-                "albumArt", "30000", 3, false)
-        val song1 = Song(1, "VOV2", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partner" +
-                "tok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y" +
-                "0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM", "artist", "albumArt", "30000", 3, false)
-        val song2 = Song(2, "VOV3", "https://rfivietnamien96k.ice.infomaniak.ch/rfivietnamien-96k.mp3",
-                "artist", "albumArt", "30000", 3, false)
-        val song3 = Song(3, "VOV4", "https://23023.live.streamtheworld.com/KIROFM_SC?DIST=TuneIn&TGT=TuneIn&maxServers=2&gdpr=0&us_privacy=1YNY&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYwOTM4Nzg1MiwiaXNzIjoidGlzcnYifQ.z-_rAzo_y0cSK0oowDtVsXraYhPj3Bqcm-14sRav4eM",
-                "artist", "albumArt", "30000", 3, false)
-
-//        mSongList.add(song)
-//        mSongList.add(song1)
-//        mSongList.add(song2)
-//        mSongList.add(song3)
-//
-//        mASongList!!.add(song)
-//        mASongList!!.add(song1)
-//        mASongList!!.add(song2)
-//        mASongList!!.add(song3)
-//        radioAdapter.setDatas(mSongList)
         initEvent()
         initEeg()
         initAutoViewpage()
@@ -190,12 +170,15 @@ class HomeFragment : BaseFragment() {
 
     override fun observable() {
         homeViewModel.loadSong.observe(this, Observer {
-            Timber.e("list"+it.size)
-            mSongList.clear()
-            mASongList!!.clear()
-            mASongList!!.addAll(it)
-            mSongList.addAll(it)
-            radioAdapter.setDatas(it)
+            if (it.size>0){
+                homeViewModel.exeApiProgram(it[0].id)
+                mSongList.clear()
+                mASongList!!.clear()
+                mASongList!!.addAll(it)
+                mSongList.addAll(it)
+                radioAdapter.setDatas(it)
+            }
+
         })
         homeViewModel.mListProgram.observe(this, Observer {
             mEpgList.clear()

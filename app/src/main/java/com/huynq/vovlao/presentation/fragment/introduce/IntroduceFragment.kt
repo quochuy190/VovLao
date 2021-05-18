@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.huynq.vovlao.R
 import com.huynq.vovlao.data.model.Language
 import com.huynq.vovlao.data.model.News
@@ -29,6 +31,7 @@ import com.vbeeon.iotdbs.utils.setOnSafeClickListener
 import kotlinx.android.synthetic.main.fragment_language.*
 import kotlinx.android.synthetic.main.fragment_recycleview.*
 import kotlinx.android.synthetic.main.fragment_recycleview.rcvAll
+import timber.log.Timber
 import vn.neo.smsvietlott.common.di.util.ConstantCommon
 
 
@@ -68,6 +71,19 @@ class IntroduceFragment : BaseFragment() {
     }
 
     override fun initView() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.e("Fetching FCM registration token failed: "+ task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+           Timber.e("token= "+task.result)
+        })
         adapterNews = context?.let {
             LanguageAdapter(it, doneClick = {
                 language = it

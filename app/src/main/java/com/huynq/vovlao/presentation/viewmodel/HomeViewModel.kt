@@ -83,7 +83,7 @@ class HomeViewModel : BaseViewModel() {
         apiClient.getProgram(mUser.userId, mLanguage.id+1, idChannel)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loading.postValue(true) }
+           // .doOnSubscribe { loading.postValue(true) }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError {
                 error.postValue(it)

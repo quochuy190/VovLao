@@ -68,6 +68,14 @@ interface ApiInterface {
         @Query("languageId") languageid: Int
     ): Single<ApiResult<List<Program>>>
 
+    @GET("/push?")
+    fun getnotify(
+        @Query("userId") userid: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("languageId") languageid: Int
+    ): Single<ApiResult<List<Notify>>>
+
 
 //    @POST("api/v1/subscriber/login")
 //    fun login(@Body loginRequest: LoginRequest): Single<ApiResult<LoginEntity>>
